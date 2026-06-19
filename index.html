@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAWSSA UNIBEN | Official Digital Platform</title>
+    <meta name="description"
+        content="Official digital platform for the Law Students' Association (LAWSSA), University of Benin Branch — The Vanguard of Legal Excellence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="public/assets/css/main.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700;900&family=Archivo:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.5/purify.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
+    <!-- GSAP must load before main.js for animations to work -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Custom JS -->
+    <script src="public/assets/js/router.js" defer></script>
+    <script src="public/assets/js/api.js" defer></script>
+    <script src="public/assets/js/main.js" defer></script>
+
+</head>
+
+<body>
+    <!--
+  LAWSSA UNIBEN | Official Digital Platform
+  Cleaned and refined for maintainability and best practices
+-->
+
+    <!-- ═══════════════════════════════════════════════════════════════
+     NOTICE MODAL
+     ═══════════════════════════════════════════════════════════════ -->
+    <div class="modal-overlay" id="noticeModal" role="dialog" aria-modal="true">
+        <div class="modal">
+            <button class="modal__close" onclick="closeModal('noticeModal')" aria-label="Close">×</button>
+            <div class="modal__body">
+                <div class="section-num">[LAWSSA — NOTICE]</div>
+                <h2 class="display" id="noticeTitle"
+                    style="font-size:var(--t-2xl);color:var(--text-h);margin-bottom:var(--s4);">Important Announcement
+                </h2>
+                <div id="noticeBody" style="color:var(--text-m);line-height:1.75;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog Modal -->
+    <div class="modal-overlay" id="blogModal" role="dialog" aria-modal="true">
+        <div class="modal modal--full">
+            <button class="modal__close" onclick="closeModal('blogModal')" aria-label="Close">×</button>
+            <div id="blogModalContent"></div>
+        </div>
+    </div>
+
+    <!-- Resource Modal -->
+    <div class="modal-overlay" id="resourceModal" role="dialog" aria-modal="true">
+        <div class="modal modal--full">
+            <button class="modal__close" onclick="closeModal('resourceModal')" aria-label="Close">×</button>
+            <div class="resource-modal__header">⚠ Ensure Google Drive link is public if document fails to load.</div>
+            <iframe id="resourceFrame" src="" title="Resource Document"></iframe>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+     TICKER
+     ═══════════════════════════════════════════════════════════════ -->
+    <div class="ticker" id="mainTicker">
+        <div class="ticker__track" id="tickerTrack">
+            <div class="ticker__item">Welcome to LAWSSA UNIBEN — Digital Home of the Proud Student Union
+                &nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
+                Online &nbsp;&nbsp;●&nbsp;&nbsp; Access Academic Resources by Level &nbsp;&nbsp;●&nbsp;&nbsp;</div>
+            <div class="ticker__item">Welcome to LAWSSA UNIBEN — Digital Home of the Proud Student Union
+                &nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
+                Online &nbsp;&nbsp;●&nbsp;&nbsp; Access Academic Resources by Level &nbsp;&nbsp;●&nbsp;&nbsp;</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+     NAVIGATION
+     ═══════════════════════════════════════════════════════════════ -->
+    <nav class="navbar" role="navigation">
+        <div class="container nav-inner">
+            <div class="nav-logo display" data-nav="home" style="cursor:pointer;">
+                LAWSSA <span>UNIBEN</span>
+            </div>
+            <ul class="nav-links">
+                <li class="nav-link nav-link--active" data-nav="home">Home</li>
+                <li class="nav-link" data-nav="leaders">Leaders</li>
+                <li class="nav-link" data-nav="news">News</li>
+                <li class="nav-link" data-nav="resources">Resources</li>
+                <li class="nav-link" data-nav="pay">Pay Dues</li>
+            </ul>
+            <button class="nav-cta" data-nav="pay">Pay Dues →</button>
+            <button class="hamburger" onclick="toggleMobile()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <div class="nav-link" data-nav="home">Home</div>
+        <div class="nav-link" data-nav="leaders">Leaders</div>
+        <div class="nav-link" data-nav="news">News</div>
+        <div class="nav-link" data-nav="resources">Resources</div>
+        <div class="nav-link" data-nav="pay">Pay Dues</div>
+    </div>
+
+    <main>
+        <!-- ═══════════════════════════════════════════════════════════════
+     SECTION: HOME
+     ═══════════════════════════════════════════════════════════════ -->
+        <section id="home" data-section="home" class="section--active">
+
+            <!-- HERO -->
+            <div class="hero">
+                <div class="hero__main">
+                    <div class="hero_left">
+                        <h1 class="hero__title display">
+                            <span class="text-gold">Vanguard</span><br>of
+                            <span class="text-legal">Legal</span>
+                            <span class="text-gold">Excellence</span>
+                        </h1>
+                        <p class="hero__subtitle">
+                            Welcome to the digital home of the Law Students' Association, University of Benin. <br>
+                            <span class="text-gold" style="font-weight:600;">Empowering legal minds. Building a
+                                legacy.</span>
+                        </p>
+                        <div class="hero__actions">
+                            <button class="btn btn--primary" onclick="Router.navigate('pay')">Pay Dues Now</button>
+                            <button class="btn btn--outline" onclick="Router.navigate('resources')">Browse
+                                Resources</button>
+                        </div>
+                        <div class="hero__session">
+                            <span style="font-size:1.3em;vertical-align:middle;">⚖</span> Faculty of Law · UNIBEN
+                        </div>
+                    </div>
+                    <div class="hero_right">
+                        <img src="public/assets/images/lady_justice.png" alt="Lady Justice Image">
+                    </div>
+                </div>
+                <div class="ticker heroticker" id="heroTicker">
+                    <div class="ticker__track" id="tickerTrack">
+
+                        <div class="ticker__item hero_ticker__item">
+                            <span class="hero-ticker__text">LAWSSA UNIBEN</span>
+                            <img src="YOUR_PRESIDENT_IMAGE.jpg" alt="President" class="hero-ticker__img">
+                        </div>
+
+                        <div class="ticker__item hero_ticker__item">
+                            <span class="hero-ticker__text">LAWSSA UNIBEN</span>
+                            <img src="YOUR_PRESIDENT_IMAGE.jpg" alt="President" class="hero-ticker__img">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="hero__bottom">
+                    <div class="hero__bottom-track">
+                        <span class="hero__bottom-item">Legal Advocacy <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Academic Excellence <span
+                                class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Student Welfare <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Community Service <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Professional Growth <span
+                                class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Leadership Development <span
+                                class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Legal Advocacy <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Academic Excellence <span
+                                class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Student Welfare <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Community Service <span class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Professional Growth <span
+                                class="hero__bottom-sep">⚖</span></span>
+                        <span class="hero__bottom-item">Leadership Development <span
+                                class="hero__bottom-sep">⚖</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHAT WE DO — [LAWSSA — 01] -->
+            <div class="what-we-do">
+                <div class="wwd-header">
+                    <div class="wwd-header-left">
+                        <div class="section-num">[LAWSSA — 01]</div>
+                        <div class="wwd-big display">OUR<br>RESPONSIBILITY</div>
+                    </div>
+                    <div class="wwd-header-right">
+                        <p class="wwd-intro">The Law Students' Association exists to serve, protect, and empower every
+                            law student at the University of Benin. Our functions span academic support, welfare
+                            advocacy, social organization, and professional development.</p>
+                    </div>
+                </div>
+                <div class="wwd-items">
+                    <div class="wwd-item">
+                        <div class="wwd-item-num">01</div>
+                        <div class="wwd-item-body">
+                            <div class="wwd-item-title">Academic Support & Resources</div>
+                            <p class="wwd-item-text">We curate and distribute past examination questions, textbooks,
+                                lecture notes, and legal reference materials across all levels — 100L through 500L —
+                                ensuring every student has access to the academic tools they need to excel. Our resource
+                                library is updated each semester by the Executive team.</p>
+                        </div>
+                    </div>
+                    <div class="wwd-item">
+                        <div class="wwd-item-num">02</div>
+                        <div class="wwd-item-body">
+                            <div class="wwd-item-title">Student Welfare & Advocacy</div>
+                            <p class="wwd-item-text">The welfare of law students is our highest priority. From academic
+                                grievances and examination irregularities to campus safety and faculty-student
+                                relations, LAWSSA stands as the first line of defence for every member. We engage the
+                                Faculty of Law and University management through structured dialogue and representation.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="wwd-item">
+                        <div class="wwd-item-num">03</div>
+                        <div class="wwd-item-body">
+                            <div class="wwd-item-title">Social Events & Programmes</div>
+                            <p class="wwd-item-text">Beyond the lecture hall, LAWSSA organizes Law Week, annual dinners,
+                                inter-faculty debates, legal aid clinics, and social mixers that build lasting bonds
+                                among law students. We recognize that the social environment of a law student is as
+                                critical as their academic performance.</p>
+                        </div>
+                    </div>
+                    <div class="wwd-item">
+                        <div class="wwd-item-num">04</div>
+                        <div class="wwd-item-body">
+                            <div class="wwd-item-title">Professional Development</div>
+                            <p class="wwd-item-text">We bridge the gap between legal education and professional practice
+                                through seminars, law clinic partnerships, moot court coaching, and mentorship
+                                programmes connecting students with practising lawyers, judges, and legal professionals
+                                across Nigeria.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS BAND — [LAWSSA — 02] -->
+            <div class="stats-band">
+                <div class="section-num"
+                    style="grid-column:span 4;padding:var(--s4) var(--s7);border-bottom:1px solid #222;color:#555;">
+                    [LAWSSA — 02]</div>
+                <div class="stat-cell">
+                    <div class="stat-cell__num">500+</div>
+                    <div class="stat-cell__label">Active Members</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell__num">15+</div>
+                    <div class="stat-cell__label">Years of Excellence</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell__num">80+</div>
+                    <div class="stat-cell__label">Academic Resources</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="stat-cell__num">5</div>
+                    <div class="stat-cell__label">Academic Levels Served</div>
+                </div>
+            </div>
+
+            <!-- PRESIDENT'S MESSAGE — [LAWSSA — 03] -->
+            <div class="pres-section reveal">
+                <div class="pres-image-col">
+                    <img id="presImage" src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80"
+                        alt="President">
+                    <div class="pres-img-overlay">
+                        <div class="pres-img-name display" id="presName">Goodness Osatohanmwen</div>
+                        <div class="pres-img-title">President, LAWSSA UNIBEN · 2025/2026</div>
+                    </div>
+                </div>
+                <div class="pres-content-col">
+                    <div class="section-num">[LAWSSA — 03]</div>
+                    <div class="pres-quote-mark display">"</div>
+                    <p class="pres-message-text" id="presText">
+                        On behalf of the Executive Council of the Law Students' Association, University of Benin, I
+                        welcome you to our official digital platform — a space built to serve, inform, and connect every
+                        law student at UNIBEN.<br><br>
+                        Our mission this academic session is simple: to leave the association better than we found it.
+                        We are committed to enhancing academic access, improving welfare structures, and ensuring that
+                        every student from 100L to 500L feels represented, heard, and empowered. This platform is one of
+                        the many steps we have taken toward that commitment.<br><br>
+                        Whether you are here to pay your association dues, access academic resources, or stay informed
+                        about the latest news from your association — we are glad you are here. The law is not just what
+                        we study; it is how we lead.
+                    </p>
+                    <div class="pres-sig">
+                        <div class="pres-sig-name display" id="presSigName">Goodness Osatohanmwen</div>
+                        <div class="pres-sig-role">President, Law Students' Association (LAWSSA)<br>University of Benin
+                            Branch · 2025/2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LEADERSHIP PREVIEW — [LAWSSA — 04] -->
+            <div class="leaders-section reveal">
+                <div class="leaders-header">
+                    <div class="section-num">[LAWSSA — 04]</div>
+                    <div class="leaders-big display">LEADERSHIP</div>
+                    <button class="btn btn--outline" onclick="Router.navigate('leaders')">See All Executives →</button>
+                </div>
+                <div class="leader-featured">
+                    <div class="leader-featured__img">
+                        <img id="presImgLeader"
+                            src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80"
+                            alt="President">
+                    </div>
+                    <div class="leader-featured__body">
+                        <div class="leader-featured__role">● President · 2025/2026</div>
+                        <div class="leader-featured__name display" id="presNameLeader">Goodness<br>Osatohanmwen</div>
+                        <p class="leader-featured__bio">Leading the 2025/2026 executive council of LAWSSA UNIBEN with a
+                            mandate centered on academic empowerment, welfare expansion, and digital transformation of
+                            association services. A final-year law student with a distinguished record in student
+                            governance and legal advocacy.</p>
+                        <div style="margin-top:var(--s6);">
+                            <button class="btn btn--outline" onclick="Router.navigate('leaders')">Meet the Full Council
+                                →</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="leaders-grid-secondary" id="leaderPreviewGrid">
+                    <!-- Injected by JS; dummy fallback below -->
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="VP">
+                        </div>
+                        <div class="leader-card__role">Vice President</div>
+                        <div class="leader-card__name display">Loading...</div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1494790108755-2616b612b890?w=200&q=80" alt="Sec">
+                        </div>
+                        <div class="leader-card__role">Secretary General</div>
+                        <div class="leader-card__name display">Loading...</div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80"
+                                alt="Fin Sec"></div>
+                        <div class="leader-card__role">Financial Secretary</div>
+                        <div class="leader-card__name display">Loading...</div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="PRO">
+                        </div>
+                        <div class="leader-card__role">P.R.O</div>
+                        <div class="leader-card__name display">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENT NEWS — [LAWSSA — 05] -->
+            <div class="news-section reveal">
+                <div class="news-header">
+                    <div>
+                        <div class="section-num">[LAWSSA — 05]</div>
+                        <div class="news-big display">OUR<br>RECENT<br>NEWS</div>
+                    </div>
+                    <button class="btn btn--outline" onclick="Router.navigate('news')">See All News →</button>
+                </div>
+                <div class="news-grid" id="recentNewsGrid">
+                    <!-- Dummy cards (replaced by JS) -->
+                    <article class="news-card">
+                        <div class="news-card__img"><img
+                                src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80"
+                                alt="News"></div>
+                        <div class="news-card__body">
+                            <div class="news-card__cat">Announcement</div>
+                            <h3 class="news-card__title display">2025/2026 Dues Payment Now Open</h3>
+                            <p class="news-card__excerpt">The LAWSSA Financial Secretary announces that association dues
+                                payment for the 2025/2026 academic session is now open on our digital platform.</p>
+                            <div class="news-card__meta"><span>Jan 15, 2026</span><span
+                                    class="news-card__arrow">→</span></div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-card__img"><img
+                                src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80"
+                                alt="News"></div>
+                        <div class="news-card__body">
+                            <div class="news-card__cat">Events</div>
+                            <h3 class="news-card__title display">Law Week 2026 — Call for Participants</h3>
+                            <p class="news-card__excerpt">LAWSSA UNIBEN proudly announces the commencement of Law Week
+                                2026. All law students are encouraged to register and participate in debates, moot court
+                                sessions, and the annual legal quiz.</p>
+                            <div class="news-card__meta"><span>Feb 3, 2026</span><span class="news-card__arrow">→</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="news-card">
+                        <div class="news-card__img"><img
+                                src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80"
+                                alt="News"></div>
+                        <div class="news-card__body">
+                            <div class="news-card__cat">Press</div>
+                            <h3 class="news-card__title display">LAWSSA Launches Official Digital Platform</h3>
+                            <p class="news-card__excerpt">In a landmark move toward digital transformation, LAWSSA
+                                UNIBEN has officially launched its digital platform — the first of its kind among law
+                                student associations in Edo State.</p>
+                            <div class="news-card__meta"><span>Mar 1, 2026</span><span class="news-card__arrow">→</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- ACADEMIC CALENDAR — [LAWSSA — 06] -->
+            <div class="calendar-section reveal">
+                <div class="cal-header">
+                    <div class="cal-header-title">Academic Calendar</div>
+                </div>
+                <div class="cal-grid" id="calendarGrid">
+                    <!-- Calendar items will be injected here -->
+                </div>
+            </div>
+
+
+            <!-- CONTACT — [LAWSSA — 10] -->
+            <div class="contact-section reveal">
+                <div class="contact-left">
+                    <div>
+                        <div class="section-num" style="color:#555;">[LAWSSA — 10]</div>
+                        <div class="contact-big display">TALK<br>TO US</div>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <div class="contact-detail__icon">✉</div>
+                            <div>
+                                <div class="contact-detail__label">Email</div>
+                                <div class="contact-detail__val">lawssauniben@gmail.com</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-detail__icon">📍</div>
+                            <div>
+                                <div class="contact-detail__label">Location</div>
+                                <div class="contact-detail__val">Faculty of Law, University of Benin, Benin City, Edo
+                                    State</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-detail__icon">📞</div>
+                            <div>
+                                <div class="contact-detail__label">Phone (Secretary-General)</div>
+                                <div class="contact-detail__val">+234 XXX XXX XXXX</div>
+                            </div>
+                        </div>
+                        <div class="contact-detail">
+                            <div class="contact-detail__icon">ig</div>
+                            <div>
+                                <div class="contact-detail__label">Instagram</div>
+                                <div class="contact-detail__val">@lawssauniben</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-right">
+                    <div class="contact-form-title display">Have Something to Share?<br>We'd Love to Hear It.</div>
+                    <form id="contactForm" onsubmit="handleContact(event)">
+                        <div class="field">
+                            <label class="field__label">Full Name</label>
+                            <input type="text" class="field__input" placeholder="Your full name" required>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Email Address</label>
+                            <input type="email" class="field__input" placeholder="your@email.com" required>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Subject</label>
+                            <input type="text" class="field__input" placeholder="What is this regarding?">
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Message</label>
+                            <textarea class="field__textarea" rows="5"
+                                placeholder="Write your message here..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn--primary" style="width:100%;">Send Message →</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="footer-top">
+                    <div class="footer-brand">
+                        <div class="footer-logo display">LAWSSA <span>UNIBEN</span></div>
+                        <p class="footer-tagline">Digital Home of the proud Law Students' Association of the University
+                            of Benin Branch. Crafted with purpose, built for excellence.</p>
+                    </div>
+                    <div>
+                        <div class="footer-col-title">Navigate</div>
+                        <nav class="footer-nav">
+                            <a data-nav="home">Home</a>
+                            <a data-nav="leaders">Leaders</a>
+                            <a data-nav="news">News & Updates</a>
+                            <a data-nav="resources">Resources</a>
+                            <a data-nav="pay">Pay Dues</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <div class="footer-col-title">Association</div>
+                        <nav class="footer-nav">
+                            <a href="#">About LAWSSA</a>
+                            <a href="#">Our Constitution</a>
+                            <a href="#">Achievements</a>
+                            <a href="#">Membership</a>
+                            <a href="#">FAQs</a>
+                        </nav>
+                    </div>
+                    <div>
+                        <div class="footer-col-title">Contact</div>
+                        <nav class="footer-nav">
+                            <a href="mailto:lawssauniben@gmail.com">lawssauniben@gmail.com</a>
+                            <a href="#">Faculty of Law, UNIBEN</a>
+                            <a href="#">Benin City, Edo State</a>
+                            <a href="#">@lawssauniben</a>
+                        </nav>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved · 2025/2026 Academic Session
+                    </div>
+                    <div class="footer-credit">Designed & Developed by <a href="https://adisaactech.com" target="_blank"
+                            rel="noopener">Adisaac Tech Innovations Ltd</a></div>
+                </div>
+            </footer>
+
+        </section><!-- /home -->
+
+        <!-- ═══════════════════════════════════════════════════════════════
+     SECTION: LEADERS
+     ═══════════════════════════════════════════════════════════════ -->
+        <section id="leaders" data-section="leaders">
+            <div class="leaders-page-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
+                <div class="section-num">[LAWSSA — LEADERSHIP]</div>
+                <div class="leaders-page-title display">
+                    Executive<br><span class="text-gold">Leadership</span>
+                </div>
+                <div class="leaders-branches">
+                    <div class="branch-pill active" onclick="setLeaderBranch('executives',this)">Executives</div>
+                    <div class="branch-pill" onclick="setLeaderBranch('senate',this)">House of Senate</div>
+                    <div class="branch-pill" onclick="setLeaderBranch('judiciary',this)">Judiciary</div>
+                </div>
+            </div>
+
+            <div id="executivesPanel">
+                <div class="leader-featured" id="leaderFeaturedFull">
+                    <div class="leader-featured__img">
+                        <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80"
+                            alt="President">
+                    </div>
+                    <div class="leader-featured__body">
+                        <div class="leader-featured__role">● President · 2025/2026 Session</div>
+                        <div class="leader-featured__name display">Goodness<br>Osatohanmwen</div>
+                        <p class="leader-featured__bio">President of LAWSSA UNIBEN for the 2025/2026 academic session. A
+                            dedicated advocate for student welfare and academic excellence. Elected on a platform of
+                            digital transformation, welfare expansion, and professional development for all law students
+                            at UNIBEN.</p>
+                        <div style="display:flex;gap:var(--s3);margin-top:var(--s5);">
+                            <a href="#" class="leader-card__social" title="Instagram">ig</a>
+                            <a href="#" class="leader-card__social" title="LinkedIn">in</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="leaders-grid-secondary" id="leaderFullGrid">
+                    <!-- Injected by JS or fallback -->
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Vice President</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a><a href="#"
+                                class="leader-card__social">in</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1494790108755-2616b612b890?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Secretary General</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Financial Secretary</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">P.R.O</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Social Director</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80" alt=""></div>
+                        <div class="leader-card__role">Academic Director</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Welfare Director</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                    <div class="leader-card">
+                        <div class="leader-card__portrait"><img
+                                src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&q=80" alt="">
+                        </div>
+                        <div class="leader-card__role">Sports Director</div>
+                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="senatePanel" style="display:none;padding:var(--s8) var(--s7);">
+                <p style="color:var(--text-m);">House of Senate details will be populated from the admin dashboard.</p>
+            </div>
+            <div id="judiciaryPanel" style="display:none;padding:var(--s8) var(--s7);">
+                <p style="color:var(--text-m);">Judiciary details will be populated from the admin dashboard.</p>
+            </div>
+
+            <!-- Footer repeat -->
+            <footer class="footer" style="margin-top:0;">
+                <div class="footer-bottom">
+                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
+                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+     SECTION: NEWS
+     ═══════════════════════════════════════════════════════════════ -->
+        <section id="news" data-section="news">
+            <div class="news-page-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
+                <div class="section-num">[LAWSSA — NEWS]</div>
+                <div class="news-page-title display">News &<br><span class="text-gold">Publications</span></div>
+                <div class="news-filter-bar" id="newsFilterBar">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Announcements">Announcements</button>
+                    <button class="filter-btn" data-filter="Events">Events</button>
+                    <button class="filter-btn" data-filter="Press">Press</button>
+                </div>
+            </div>
+            <div class="news-full-grid" id="allNewsGrid">
+                <!-- Injected by JS; dummy fallback -->
+                <article class="news-card" onclick="openBlogDummy(0)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Announcements</div>
+                        <h3 class="news-card__title display">2025/2026 Dues Payment Now Open</h3>
+                        <p class="news-card__excerpt">The LAWSSA Financial Secretary announces that association dues
+                            payment for the 2025/2026 academic session is now open on this digital platform. All members
+                            are urged to pay promptly to enjoy full membership benefits.</p>
+                        <div class="news-card__meta"><span>Jan 15, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card" onclick="openBlogDummy(1)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Events</div>
+                        <h3 class="news-card__title display">Law Week 2026 — Call for Participants</h3>
+                        <p class="news-card__excerpt">LAWSSA UNIBEN proudly announces the commencement of Law Week 2026.
+                            All law students are encouraged to register and participate in debates, moot court sessions,
+                            and the annual legal quiz competition.</p>
+                        <div class="news-card__meta"><span>Feb 3, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card" onclick="openBlogDummy(2)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Press</div>
+                        <h3 class="news-card__title display">LAWSSA Launches Official Digital Platform</h3>
+                        <p class="news-card__excerpt">In a landmark move, LAWSSA UNIBEN has officially launched its
+                            digital platform — the first of its kind among law student associations in Edo State. The
+                            platform enables online dues payment, resource access, and news distribution.</p>
+                        <div class="news-card__meta"><span>Mar 1, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card" onclick="openBlogDummy(3)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Events</div>
+                        <h3 class="news-card__title display">Annual Moot Court Competition 2026</h3>
+                        <p class="news-card__excerpt">The annual LAWSSA UNIBEN Moot Court Competition returns this
+                            February. Open to all levels, this prestigious competition offers winners a place in the
+                            inter-university competition representing UNIBEN.</p>
+                        <div class="news-card__meta"><span>Feb 20, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card" onclick="openBlogDummy(4)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Announcements</div>
+                        <h3 class="news-card__title display">New Academic Resources Added — All Levels</h3>
+                        <p class="news-card__excerpt">The Academic Director is pleased to announce the addition of over
+                            40 new resources to the LAWSSA digital library, covering past questions and lecture notes
+                            from 100L to 500L.</p>
+                        <div class="news-card__meta"><span>Jan 28, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="news-card" onclick="openBlogDummy(5)">
+                    <div class="news-card__img"><img
+                            src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&q=80" alt=""
+                            loading="lazy"></div>
+                    <div class="news-card__body">
+                        <div class="news-card__cat">Press</div>
+                        <h3 class="news-card__title display">LAWSSA Welfare Fund — Call for Applications</h3>
+                        <p class="news-card__excerpt">The LAWSSA Welfare Committee invites eligible law students
+                            experiencing financial hardship to apply for the 2026 Student Welfare Fund. Applications are
+                            open to dues-paying members of all levels.</p>
+                        <div class="news-card__meta"><span>Mar 15, 2026</span><span class="news-card__arrow">→</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <footer class="footer">
+                <div class="footer-bottom">
+                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
+                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+     SECTION: RESOURCES
+     ═══════════════════════════════════════════════════════════════ -->
+        <section id="resources" data-section="resources">
+            <div class="resources-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
+                <div class="section-num">[LAWSSA — RESOURCES]</div>
+                <div class="resources-title display">Academic<br><span class="text-gold">Resources</span></div>
+                <div class="resources-level-tabs" id="levelTabs">
+                    <button class="level-tab active" data-level="all">All Levels</button>
+                    <button class="level-tab" data-level="100">100 Level</button>
+                    <button class="level-tab" data-level="200">200 Level</button>
+                    <button class="level-tab" data-level="300">300 Level</button>
+                    <button class="level-tab" data-level="400">400 Level</button>
+                    <button class="level-tab" data-level="500">500 Level</button>
+                </div>
+            </div>
+            <div class="resources-grid" id="resourcesGrid">
+                <!-- Dummy resources; replaced by JS -->
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">100L</div>
+                    <div class="resource-card__title display">Law of Contract — Past Questions 2022</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">100L</div>
+                    <div class="resource-card__title display">Constitutional Law — Lecture Notes</div>
+                    <div class="resource-card__type">Lecture Note</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">200L</div>
+                    <div class="resource-card__title display">Law of Torts — Past Questions 2023</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">200L</div>
+                    <div class="resource-card__title display">Criminal Law Textbook — Smith & Hogan</div>
+                    <div class="resource-card__type">Textbook</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">300L</div>
+                    <div class="resource-card__title display">Company Law — Past Questions 2022–2024</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">300L</div>
+                    <div class="resource-card__title display">Evidence Act — Annotated Notes</div>
+                    <div class="resource-card__type">Lecture Note</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">400L</div>
+                    <div class="resource-card__title display">Commercial Law — Past Questions 2023</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">400L</div>
+                    <div class="resource-card__title display">Jurisprudence — Complete Study Guide</div>
+                    <div class="resource-card__type">Reference</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">500L</div>
+                    <div class="resource-card__title display">Professional Ethics — Bar Prep Notes</div>
+                    <div class="resource-card__type">Lecture Note</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">500L</div>
+                    <div class="resource-card__title display">International Law — Past Questions 2024</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">200L</div>
+                    <div class="resource-card__title display">Land Law — Comprehensive Notes</div>
+                    <div class="resource-card__type">Lecture Note</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+                <div class="resource-card" onclick="viewResource('https://drive.google.com/file/d/example/view')">
+                    <div class="resource-badge">500L</div>
+                    <div class="resource-card__title display">Taxation Law — Past Questions 2022–2024</div>
+                    <div class="resource-card__type">Past Question</div>
+                    <div class="resource-card__arrow">→</div>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="footer-bottom">
+                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
+                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
+                </div>
+            </footer>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+     SECTION: PAY DUES
+     ═══════════════════════════════════════════════════════════════ -->
+        <section id="pay" data-section="pay">
+            <div class="pay-layout">
+                <div class="pay-info">
+                    <div>
+                        <div class="section-num" style="color:#555;">[LAWSSA — DUES]</div>
+                        <div class="pay-big display">Association<br><span class="text-gold">Dues</span></div>
+                        <p
+                            style="color:#777;margin-top:var(--s4);font-size:var(--t-sm);max-width:380px;line-height:1.75;">
+                            Paying your association dues is the first step to unlocking full membership benefits —
+                            including academic resources, event access, and welfare support. Payments are secure and
+                            instant.
+                        </p>
+                    </div>
+                    <div class="pay-cards">
+                        <div class="pay-card-type">
+                            <div class="pay-card-type__label">Faculty Dues</div>
+                            <div class="pay-card-type__amount display">₦3,000</div>
+                            <div class="pay-card-type__desc">Covers all LAWSSA programs, events, resources, and advocacy
+                                for the 2025/2026 session.</div>
+                        </div>
+                        <div class="pay-card-type">
+                            <div class="pay-card-type__label">Departmental Dues</div>
+                            <div class="pay-card-type__amount display">₦1,500</div>
+                            <div class="pay-card-type__desc">Supports specific departmental programs and initiatives for
+                                your level.</div>
+                        </div>
+                    </div>
+                    <p class="pay-note">All transactions are processed securely via KoraPay. An official PDF receipt
+                        will be automatically generated and downloaded upon successful payment. A confirmation email is
+                        also sent to the address provided.</p>
+                </div>
+                <div class="pay-form-col">
+                    <div class="pay-form-title display">Pay Your Dues</div>
+                    <p class="pay-form-sub">Fill in your details below to proceed to the secure payment gateway.</p>
+                    <form id="paymentForm">
+                        <div class="field">
+                            <label class="field__label">Full Name</label>
+                            <input type="text" class="field__input" id="payName" placeholder="John Doe" required>
+                            <span class="field__error" id="payNameErr"></span>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Matric Number</label>
+                            <input type="text" class="field__input" id="payMatric" placeholder="LAW/21/XXXX" required>
+                            <span class="field__error" id="payMatricErr"></span>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Academic Level</label>
+                            <select class="field__select" id="payLevel" required>
+                                <option value="">— Select your level —</option>
+                                <option value="100">100 Level</option>
+                                <option value="200">200 Level</option>
+                                <option value="300">300 Level</option>
+                                <option value="400">400 Level</option>
+                                <option value="500">500 Level</option>
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Email Address</label>
+                            <input type="email" class="field__input" id="payEmail" placeholder="john@example.com"
+                                required>
+                            <span class="field__error" id="payEmailErr"></span>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Phone Number</label>
+                            <input type="tel" class="field__input" id="payPhone" placeholder="08012345678" required>
+                        </div>
+                        <div class="field">
+                            <label class="field__label">Payment Type</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="duesType" value="faculty" checked> Faculty Dues — ₦3,000
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="duesType" value="departmental"> Departmental — ₦1,500
+                                </label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn--gold"
+                            style="width:100%;margin-top:var(--s5);padding:1rem;" id="payBtn">
+                            Proceed to Payment →
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="footer-bottom">
+                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
+                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
+                </div>
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- Your main JS file -->
+    <script src="public/assets/js/main.js"></script>
+    <script>
+        // All scripts are loaded with defer for performance.
+        // ════════════════════════════════════════════════════════
+        // CONFIG (replace before going live)
+        // ════════════════════════════════════════════════════════
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+        const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+        const KORAPAY_KEY = 'YOUR_KORAPAY_PUBLIC_KEY';
+
+        // Only init Supabase if keys are set
+        let supabase = null;
+        try {
+            if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+            }
+        } catch (e) { }
+
+        // ════════════════════════════════════════════════════════
+        // STATE
+        // ════════════════════════════════════════════════════════
+        const state = { posts: [], resources: [], leadership: [], settings: {}, calendar: [] };
+
+        // ════════════════════════════════════════════════════════
+        // ROUTER
+        // ════════════════════════════════════════════════════════
+        const Router = (() => {
+            const allSections = () => document.querySelectorAll('[data-section]');
+            const allNavLinks = () => document.querySelectorAll('.nav-link');
+
+            function navigate(target) {
+                allSections().forEach(s => s.classList.remove('section--active'));
+                allNavLinks().forEach(l => l.classList.remove('nav-link--active'));
+
+                const sec = document.querySelector(`[data-section="${target}"]`);
+                const link = document.querySelector(`.nav-link[data-nav="${target}"]`);
+
+                if (sec) sec.classList.add('section--active');
+                if (link) link.classList.add('nav-link--active');
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.history.pushState({ page: target }, '', `#${target}`);
+            }
+
+            function init() {
+                allNavLinks().forEach(l => {
+                    l.addEventListener('click', () => navigate(l.dataset.nav));
+                });
+                window.addEventListener('popstate', e => navigate(e.state?.page || 'home'));
+                const hash = window.location.hash.replace('#', '') || 'home';
+                navigate(hash);
+            }
+
+            return { init, navigate };
+        })();
+
+        // ════════════════════════════════════════════════════════
+        // MODAL
+        // ════════════════════════════════════════════════════════
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('modal--active');
+            document.body.classList.remove('no-scroll');
+            if (id === 'resourceModal') document.getElementById('resourceFrame').src = '';
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.add('modal--active');
+            document.body.classList.add('no-scroll');
+        }
+
+        // Close on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', e => {
+                if (e.target === overlay) closeModal(overlay.id);
+            });
+        });
+
+        // Close on Escape
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.modal--active').forEach(m => closeModal(m.id));
+            }
+        });
+
+        // ════════════════════════════════════════════════════════
+        // MOBILE MENU
+        // ════════════════════════════════════════════════════════
+        let mobileOpen = false;
+        function toggleMobile() {
+            mobileOpen = !mobileOpen;
+            document.getElementById('mobileNav').classList.toggle('open', mobileOpen);
+        }
+
+        // ════════════════════════════════════════════════════════
+        // FAQ ACCORDION
+        // ════════════════════════════════════════════════════════
+        function toggleFaq(qEl) {
+            const item = qEl.parentElement;
+            const wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        // ════════════════════════════════════════════════════════
+        // LEADERS BRANCH SWITCHER
+        // ════════════════════════════════════════════════════════
+        function setLeaderBranch(branch, pill) {
+            document.querySelectorAll('.branch-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            document.getElementById('executivesPanel').style.display = branch === 'executives' ? '' : 'none';
+            document.getElementById('senatePanel').style.display = branch === 'senate' ? '' : 'none';
+            document.getElementById('judiciaryPanel').style.display = branch === 'judiciary' ? '' : 'none';
+        }
+
+        // ════════════════════════════════════════════════════════
+        // RESOURCE VIEWER
+        // ════════════════════════════════════════════════════════
+        function viewResource(link) {
+            if (!link || link.includes('example')) {
+                alert('This resource link is a placeholder. Please contact the admin.');
+                return;
+            }
+            const preview = link.replace('/view', '/preview').replace('?usp=sharing', '');
+            document.getElementById('resourceFrame').src = preview;
+            openModal('resourceModal');
+        }
+
+        // ════════════════════════════════════════════════════════
+        // RESOURCE LEVEL FILTER
+        // ════════════════════════════════════════════════════════
+        document.querySelectorAll('#levelTabs .level-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('#levelTabs .level-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const level = tab.dataset.level;
+                if (state.resources.length > 0) {
+                    // Use real data from Supabase when available
+                    const filtered = level === 'all' ? state.resources : state.resources.filter(r => String(r.academic_level) === level);
+                    renderResources(filtered);
+                } else {
+                    // Filter dummy cards in DOM
+                    document.querySelectorAll('#resourcesGrid .resource-card').forEach(card => {
+                        const badge = card.querySelector('.resource-badge');
+                        if (!badge) return;
+                        const cardLevel = badge.textContent.replace('L', '').trim();
+                        card.style.display = (level === 'all' || cardLevel === level) ? '' : 'none';
+                    });
+                }
+            });
+        });
+
+        // ════════════════════════════════════════════════════════
+        // NEWS FILTER
+        // ════════════════════════════════════════════════════════
+        document.querySelectorAll('#newsFilterBar .filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#newsFilterBar .filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                if (state.posts.length > 0) {
+                    const filtered = filter === 'all' ? state.posts : state.posts.filter(p => p.category === filter);
+                    renderAllNews(filtered);
+                } else {
+                    document.querySelectorAll('#allNewsGrid .news-card').forEach(card => {
+                        const cat = card.querySelector('.news-card__cat')?.textContent.trim();
+                        card.style.display = (filter === 'all' || cat === filter) ? '' : 'none';
+                    });
+                }
+            });
+        });
+
+        // ════════════════════════════════════════════════════════
+        // RENDER FUNCTIONS (called when Supabase data loads)
+        // ════════════════════════════════════════════════════════
+        function renderAllNews(posts) {
+            const g = document.getElementById('allNewsGrid');
+            if (!posts.length) { g.innerHTML = '<div class="news-empty">No posts found.</div>'; return; }
+            g.innerHTML = posts.map(p => `
+    <article class="news-card" onclick="openBlog('${p.id}')" style="cursor:pointer">
+      <div class="news-card__img"><img src="${p.cover_image_url || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80'}" alt="" loading="lazy"></div>
+      <div class="news-card__body">
+        <div class="news-card__cat">${p.category || 'News'}</div>
+        <h3 class="news-card__title display">${p.title}</h3>
+        <p class="news-card__excerpt">${p.excerpt || ''}</p>
+        <div class="news-card__meta"><span>${new Date(p.published_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' })}</span><span class="news-card__arrow">→</span></div>
+      </div>
+    </article>`).join('');
+        }
+
+        function renderResources(items) {
+            const g = document.getElementById('resourcesGrid');
+            if (!items.length) { g.innerHTML = '<p style="padding:var(--s7);color:var(--text-m);">No resources found for this level.</p>'; return; }
+            g.innerHTML = items.map(r => `
+    <div class="resource-card" onclick="viewResource('${r.drive_link}')">
+      <div class="resource-badge">${r.academic_level}L</div>
+      <div class="resource-card__title display">${r.title}</div>
+      <div class="resource-card__type">${r.resource_type || ''}</div>
+      <div class="resource-card__arrow">→</div>
+    </div>`).join('');
+        }
+
+        function openBlog(id) {
+            const post = state.posts.find(p => p.id === id);
+            if (!post) return;
+            const el = document.getElementById('blogModalContent');
+            el.innerHTML = `
+    <div class="blog-modal__cover"><img src="${post.cover_image_url || ''}" alt="${post.title}"></div>
+    <div class="blog-modal__body">
+      <div class="blog-modal__cat">${post.category || 'News'}</div>
+      <h1 class="blog-modal__title">${post.title}</h1>
+      <div class="blog-modal__meta">By ${post.author || 'LAWSSA UNIBEN'} · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
+      <div class="blog-modal__content">${DOMPurify.sanitize(post.content)}</div>
+    </div>`;
+            openModal('blogModal');
+        }
+
+        // Dummy blog modal for hardcoded news cards
+        const dummyPosts = [
+            { title: '2025/2026 Dues Payment Now Open', category: 'Announcements', published_at: '2026-01-15', content: '<p>The LAWSSA Financial Secretary is pleased to announce that association dues payment for the 2025/2026 academic session is now open on this platform.</p><p>All members are urged to pay their Faculty Dues (₦3,000) and Departmental Dues (₦1,500) promptly to enjoy full membership benefits for the session.</p><p>Payments are processed securely via KoraPay, and an official PDF receipt is automatically generated upon successful payment.</p>', cover_image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80' },
+            { title: 'Law Week 2026 — Call for Participants', category: 'Events', published_at: '2026-02-03', content: '<p>LAWSSA UNIBEN proudly announces the commencement of Law Week 2026, scheduled to hold from February 10–15, 2026.</p><p>This year\'s theme is <em>"The Law as an Instrument of Justice and Social Transformation."</em></p><p>Events include: Inter-level moot court competition, legal debate, law quiz bowl, keynote address by a distinguished jurist, and the annual Law Dinner on the final day.</p><p>Registration is open to all dues-paying members. Contact the Social Director for more details.</p>', cover_image_url: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80' },
+            { title: 'LAWSSA Launches Official Digital Platform', category: 'Press', published_at: '2026-03-01', content: '<p>In a landmark step toward the digital transformation of student association services, LAWSSA UNIBEN has officially launched its digital platform — the first of its kind among faculty-level law student associations in Edo State.</p><p>The platform, built in partnership with Adisaac Tech Innovations Ltd, offers online dues payment, academic resource access, news and announcement distribution, executive leadership profiles, and an academic calendar.</p><p>The President described the launch as "a defining moment in how LAWSSA serves its members."</p>', cover_image_url: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80' },
+            { title: 'Annual Moot Court Competition 2026', category: 'Events', published_at: '2026-02-20', content: '<p>The annual LAWSSA UNIBEN Moot Court Competition returns this February, open to all levels from 100L to 500L.</p><p>Winners of this prestigious competition represent UNIBEN at the inter-university NULAI Moot Court Competition.</p><p>Register with the Academic Director before February 12, 2026. Entry is free for all dues-paying members.</p>', cover_image_url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
+            { title: 'New Academic Resources Added — All Levels', category: 'Announcements', published_at: '2026-01-28', content: '<p>The LAWSSA Academic Director is pleased to announce the addition of over 40 new resources to the LAWSSA digital library, covering past questions, lecture notes, and textbook references from 100L to 500L.</p><p>Resources are accessible via the Resources section of this platform. Filter by your level to find relevant materials.</p>', cover_image_url: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600&q=80' },
+            { title: 'LAWSSA Welfare Fund — Call for Applications', category: 'Press', published_at: '2026-03-15', content: '<p>The LAWSSA Welfare Committee invites eligible law students facing financial hardship to apply for the 2026 Student Welfare Fund.</p><p>Applications are open to dues-paying members of all levels. Criteria include demonstrated financial need, academic standing, and a brief statement of circumstances.</p><p>Submit applications to the Welfare Director in writing or via email by April 1, 2026.</p>', cover_image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&q=80' }
+        ];
+
+        function openBlogDummy(idx) {
+            const post = dummyPosts[idx];
+            const el = document.getElementById('blogModalContent');
+            el.innerHTML = `
+    <div class="blog-modal__cover"><img src="${post.cover_image_url}" alt="${post.title}"></div>
+    <div class="blog-modal__body">
+      <div class="blog-modal__cat">${post.category}</div>
+      <h1 class="blog-modal__title display">${post.title}</h1>
+      <div class="blog-modal__meta">By LAWSSA UNIBEN Executive Council · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
+      <div class="blog-modal__content">${post.content}</div>
+    </div>`;
+            openModal('blogModal');
+        }
+
+        // Attach click to hardcoded recent news cards
+        document.querySelectorAll('#recentNewsGrid .news-card').forEach((card, i) => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', () => openBlogDummy(i));
+        });
+
+        // ════════════════════════════════════════════════════════
+        // PAYMENT FORM
+        // ════════════════════════════════════════════════════════
+        document.getElementById('paymentForm').addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = document.getElementById('payBtn');
+            btn.disabled = true; btn.textContent = 'Initializing...';
+
+            const name = document.getElementById('payName').value.trim();
+            const matric = document.getElementById('payMatric').value.trim();
+            const level = document.getElementById('payLevel').value;
+            const email = document.getElementById('payEmail').value.trim();
+            const phone = document.getElementById('payPhone').value.trim();
+            const type = document.querySelector('input[name="duesType"]:checked').value;
+            const amount = type === 'faculty' ? 3000 : 1500;
+            const ref = `LAWSSA-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+
+            // Validate
+            let valid = true;
+            if (!name) { document.getElementById('payNameErr').textContent = 'Full name is required.'; valid = false; }
+            else document.getElementById('payNameErr').textContent = '';
+            if (!matric) { document.getElementById('payMatricErr').textContent = 'Matric number is required.'; valid = false; }
+            else document.getElementById('payMatricErr').textContent = '';
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('payEmailErr').textContent = 'A valid email address is required.'; valid = false;
+            } else document.getElementById('payEmailErr').textContent = '';
+
+            if (!valid) { btn.disabled = false; btn.textContent = 'Proceed to Payment →'; return; }
+
+            // Insert pending payment (if Supabase connected)
+            if (supabase) {
+                const { error } = await supabase.from('payments').insert([{
+                    transaction_ref: ref, full_name: name, matric_number: matric,
+                    academic_level: parseInt(level), email, phone, dues_type: type,
+                    amount, status: 'pending'
+                }]);
+                if (error) { alert('Error initializing payment. Please try again.'); btn.disabled = false; btn.textContent = 'Proceed to Payment →'; return; }
+            }
+
+            // KoraPay checkout (if script loaded)
+            if (window.Korapay) {
+                Korapay.initialize({
+                    key: KORAPAY_KEY, reference: ref, amount, currency: 'NGN',
+                    customer: { name, email },
+                    notification_url: `${SUPABASE_URL}/functions/v1/korapay-webhook`,
+                    onClose: () => { btn.disabled = false; btn.textContent = 'Proceed to Payment →'; },
+                    onSuccess: () => { handlePaymentSuccess(ref, name, matric, level, email, type, amount); }
+                });
+            } else {
+                alert('Payment gateway not loaded. Please check your internet connection.');
+                btn.disabled = false; btn.textContent = 'Proceed to Payment →';
+            }
+        });
+
+        async function handlePaymentSuccess(ref, name, matric, level, email, type, amount) {
+            // Update DB
+            if (supabase) await supabase.from('payments').update({ status: 'paid', paid_at: new Date().toISOString() }).eq('transaction_ref', ref);
+
+            // Generate jsPDF receipt
+            if (window.jspdf) {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+                doc.setFontSize(18); doc.setFont('helvetica', 'bold');
+                doc.text('LAWSSA UNIBEN — PAYMENT RECEIPT', 20, 25);
+                doc.setFontSize(10); doc.setFont('helvetica', 'normal');
+                doc.text(`Faculty of Law, University of Benin · 2025/2026 Academic Session`, 20, 35);
+                doc.line(20, 40, 190, 40);
+                const fields = [['Full Name', name], ['Matric Number', matric], ['Academic Level', `${level}L`], ['Email', email], ['Payment Type', type === 'faculty' ? 'Faculty Dues' : 'Departmental Dues'], ['Amount Paid', `NGN ${amount.toLocaleString()}.00`], ['Reference', ref], ['Date', new Date().toLocaleDateString('en-NG', { dateStyle: 'full' })], ['Status', 'CONFIRMED ✓']];
+                fields.forEach(([label, val], i) => {
+                    doc.setFont('helvetica', 'bold'); doc.text(`${label}:`, 20, 55 + i * 12);
+                    doc.setFont('helvetica', 'normal'); doc.text(val, 80, 55 + i * 12);
+                });
+                doc.line(20, 170, 190, 170);
+                doc.setFontSize(9); doc.text('This receipt is an official document of LAWSSA UNIBEN. Keep it for your records.', 20, 178);
+                doc.text('Digital Platform by Adisaac Tech Innovations Ltd', 20, 185);
+                doc.save(`LAWSSA_Receipt_${ref}.pdf`);
+            }
+
+            // Show success
+            openModal('noticeModal');
+            document.getElementById('noticeTitle').textContent = 'Payment Successful! ✓';
+            document.getElementById('noticeBody').innerHTML = `<p>Your payment of <strong>₦${amount.toLocaleString()}</strong> has been confirmed.<br>Reference: <strong>${ref}</strong><br><br>Your receipt has been downloaded. Check your email for a confirmation copy.</p>`;
+        }
+
+        // ════════════════════════════════════════════════════════
+        // CONTACT FORM
+        // ════════════════════════════════════════════════════════
+        function handleContact(e) {
+            e.preventDefault();
+            openModal('noticeModal');
+            document.getElementById('noticeTitle').textContent = 'Message Sent!';
+            document.getElementById('noticeBody').textContent = 'Thank you for reaching out. The LAWSSA Executive Council will respond within 48 hours.';
+            e.target.reset();
+        }
+
+        // ════════════════════════════════════════════════════════
+        // SCROLL REVEAL
+        // ════════════════════════════════════════════════════════
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); } });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        // ════════════════════════════════════════════════════════
+        // SUPABASE DATA LOAD
+        // ════════════════════════════════════════════════════════
+        async function loadData() {
+            if (!supabase) return; // Use dummy data if not connected
+            try {
+                const [posts, resources, leaders, settings, calendar] = await Promise.all([
+                    supabase.from('blog_posts').select('*').order('published_at', { ascending: false }),
+                    supabase.from('resources').select('*').order('created_at', { ascending: false }),
+                    supabase.from('leadership').select('*').order('hierarchy_order'),
+                    supabase.from('system_settings').select('*').single(),
+                    supabase.from('academic_calendar').select('*').order('event_date').limit(5)
+                ]);
+
+                if (posts.data) state.posts = posts.data;
+                if (resources.data) state.resources = resources.data;
+                if (leaders.data) state.leadership = leaders.data;
+                if (settings.data) state.settings = settings.data;
+                if (calendar.data) state.calendar = calendar.data;
+
+                // Notice popup
+                if (state.settings.notice_is_active && !sessionStorage.getItem('notice_shown')) {
+                    document.getElementById('noticeTitle').textContent = state.settings.notice_title || 'Notice';
+                    document.getElementById('noticeBody').innerHTML = state.settings.notice_body || '';
+                    openModal('noticeModal');
+                    sessionStorage.setItem('notice_shown', '1');
+                }
+
+                // Ticker
+                if (state.settings.ticker_text) {
+                    const txt = (state.settings.ticker_text + '  ●  ').repeat(8);
+                    document.getElementById('tickerTrack').innerHTML = `<div class="ticker__item">${txt}</div><div class="ticker__item">${txt}</div>`;
+                }
+
+                // President
+                const pres = state.leadership.find(l => l.hierarchy_order === 1);
+                if (pres) {
+                    document.getElementById('presImage').src = pres.image_url;
+                    document.getElementById('presImgLeader').src = pres.image_url;
+                    document.getElementById('presName').textContent = pres.name;
+                    document.getElementById('presSigName').textContent = pres.name;
+                    document.getElementById('presNameLeader').textContent = pres.name;
+                    document.getElementById('presText').innerHTML = pres.bio || '';
+                    document.querySelector('.leader-featured__name').innerHTML = pres.name.replace(' ', '<br>');
+                }
+
+                // Recent news strip (home)
+                if (state.posts.length) {
+                    const grid = document.getElementById('recentNewsGrid');
+                    grid.innerHTML = state.posts.slice(0, 3).map((p, i) => `
+        <article class="news-card" onclick="openBlog('${p.id}')" style="cursor:pointer">
+          <div class="news-card__img"><img src="${p.cover_image_url || 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80'}" alt="" loading="lazy"></div>
+          <div class="news-card__body">
+            <div class="news-card__cat">${p.category || 'News'}</div>
+            <h3 class="news-card__title display">${p.title}</h3>
+            <p class="news-card__excerpt">${p.excerpt || ''}</p>
+            <div class="news-card__meta"><span>${new Date(p.published_at).toLocaleDateString('en-NG', { day: 'numeric', month: 'short', year: 'numeric' })}</span><span class="news-card__arrow">→</span></div>
+          </div>
+        </article>`).join('');
+                }
+
+                // All news
+                if (state.posts.length) renderAllNews(state.posts);
+
+                // Leaders
+                if (state.leadership.length) {
+                    const others = state.leadership.filter(l => l.hierarchy_order !== 1);
+                    const previewGrid = document.getElementById('leaderPreviewGrid');
+                    if (previewGrid) previewGrid.innerHTML = others.slice(0, 4).map(l => `
+        <div class="leader-card">
+          <div class="leader-card__portrait"><img src="${l.image_url}" alt="${l.name}" loading="lazy"></div>
+          <div class="leader-card__role">${l.position}</div>
+          <div class="leader-card__name display">${l.name}</div>
+          <div class="leader-card__socials">
+            ${l.ig_link ? `<a href="${l.ig_link}" class="leader-card__social" target="_blank">ig</a>` : ''}
+            ${l.linkedin_link ? `<a href="${l.linkedin_link}" class="leader-card__social" target="_blank">in</a>` : ''}
+          </div>
+        </div>`).join('');
+
+                    const fullGrid = document.getElementById('leaderFullGrid');
+                    if (fullGrid) fullGrid.innerHTML = others.map(l => `
+        <div class="leader-card">
+          <div class="leader-card__portrait"><img src="${l.image_url}" alt="${l.name}" loading="lazy"></div>
+          <div class="leader-card__role">${l.position}</div>
+          <div class="leader-card__name display">${l.name}</div>
+          <p style="font-size:var(--t-xs);color:var(--text-m);margin-top:var(--s2)">${l.bio || ''}</p>
+          <div class="leader-card__socials">
+            ${l.ig_link ? `<a href="${l.ig_link}" class="leader-card__social" target="_blank">ig</a>` : ''}
+            ${l.linkedin_link ? `<a href="${l.linkedin_link}" class="leader-card__social" target="_blank">in</a>` : ''}
+          </div>
+        </div>`).join('');
+                }
+
+                // Resources
+                if (state.resources.length) renderResources(state.resources);
+
+                // Calendar
+                if (state.calendar.length) {
+                    document.getElementById('calendarGrid').innerHTML = state.calendar.map(ev => {
+                        const d = new Date(ev.event_date + 'T00:00:00');
+                        return `<div class="cal-item">
+          <div class="cal-item__date display">${String(d.getDate()).padStart(2, '0')}</div>
+          <div class="cal-item__month">${d.toLocaleDateString('en-NG', { month: 'short', year: 'numeric' })}</div>
+          <div class="cal-item__title">${ev.event_title}</div>
+          <div class="cal-item__desc">${ev.description || ''}</div>
+        </div>`;
+                    }).join('');
+                }
+
+            } catch (err) { console.warn('Supabase load failed, using dummy data.', err); }
+        }
+
+        // ════════════════════════════════════════════════════════
+        // INIT
+        // ════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            Router.init();
+            loadData();
+
+            // Handle payment success redirect (from KoraPay redirect_url)
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('status') === 'success') {
+                const ref = params.get('ref');
+                if (ref) {
+                    openModal('noticeModal');
+                    document.getElementById('noticeTitle').textContent = 'Payment Confirmed! ✓';
+                    document.getElementById('noticeBody').innerHTML = `Payment reference <strong>${ref}</strong> has been confirmed. Your receipt will be downloaded shortly.`;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

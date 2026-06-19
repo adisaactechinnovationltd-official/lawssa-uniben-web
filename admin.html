@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAWSSA Admin Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@400;700&family=Archivo:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
+  <style>
+    :root {
+      --color-bg: #050505;
+      --color-surface: #111;
+      --color-border: #222;
+      --color-gold: #c9a84c;
+      --font-display: 'Big Shoulders Display', sans-serif;
+      --font-body: 'Archivo', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--color-bg); color: white; font-family: var(--font-body); }
+    
+    /* Auth Screen */
+    #authScreen { height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .login-card { background: var(--color-surface); padding: 40px; border: 1px solid var(--color-border); width: 100%; max-width: 400px; }
+    
+    /* Dashboard Layout */
+    #adminDash { display: none; grid-template-columns: 260px 1fr; height: 100vh; }
+    .sidebar { background: var(--color-surface); border-right: 1px solid var(--color-border); padding: 30px; }
+    .main-content { overflow-y: auto; padding: 40px; }
+    
+    .nav-item { padding: 12px 0; color: #888; cursor: pointer; text-transform: uppercase; font-size: 13px; letter-spacing: 1px; }
+    .nav-item:hover, .nav-item.active { color: var(--color-gold); }
+    
+    .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
+    .stat-card { background: var(--color-surface); padding: 20px; border: 1px solid var(--color-border); }
+    .stat-val { font-family: var(--font-display); font-size: 32px; color: var(--color-gold); }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { text-align: left; color: #555; font-size: 12px; text-transform: uppercase; padding: 12px; border-bottom: 1px solid var(--color-border); }
+    td { padding: 12px; border-bottom: 1px solid var(--color-border); font-size: 14px; }
+    
+    .btn { padding: 10px 20px; background: var(--color-gold); border: none; cursor: pointer; font-weight: 600; }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; font-size: 12px; color: #888; margin-bottom: 8px; }
+    input, select, textarea { width: 100%; background: #000; border: 1px solid var(--color-border); padding: 12px; color: white; }
+    
+    section { display: none; }
+    section.active { display: block; }
+
+    #editor-container { height: 300px; background: white; color: black; }
+  </style>
+</head>
+<body>
+
+  <!-- Auth Screen -->
+  <div id="authScreen">
+    <div class="login-card">
+      <h1 class="display" style="margin-bottom: 20px">ADMIN <span style="color: var(--color-gold)">PORTAL</span></h1>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="adminEmail">
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="adminPass">
+      </div>
+      <button class="btn" onclick="handleLogin()" style="width: 100%">Sign In</button>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="adminDash">
+    <aside class="sidebar">
+      <h2 class="display" style="margin-bottom: 40px">LAWSSA <span style="color: var(--color-gold)">DASH</span></h2>
+      <nav>
+        <div class="nav-item active" onclick="showSection('overview')">Overview</div>
+        <div class="nav-item" onclick="showSection('blog')">Blog Posts</div>
+        <div class="nav-item" onclick="showSection('resources')">Resources</div>
+        <div class="nav-item" onclick="showSection('payments')">Payments</div>
+        <div class="nav-item" onclick="showSection('settings')">Settings</div>
+        <div class="nav-item" onclick="handleLogout()" style="margin-top: 40px; color: #e05252">Sign Out</div>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <!-- Overview -->
+      <section id="overview" class="active">
+        <h1 class="display">Overview</h1>
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-label">Total Dues</div><div class="stat-val" id="stat-dues">₦0</div></div>
+          <div class="stat-card"><div class="stat-label">Resources</div><div class="stat-val" id="stat-res">0</div></div>
+          <div class="stat-card"><div class="stat-label">Blog Posts</div><div class="stat-val" id="stat-blog">0</div></div>
+          <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-val" id="stat-pending">0</div></div>
+        </div>
+      </section>
+
+      <!-- Blog -->
+      <section id="blog">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h1 class="display">Manage Blog</h1>
+          <button class="btn" onclick="openBlogEditor()">New Post</button>
+        </div>
+        <table id="blogTable">
+          <thead><tr><th>Title</th><th>Category</th><th>Date</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Resources -->
+      <section id="resources">
+        <h1 class="display">Manage Resources</h1>
+        <div class="stat-card" style="margin-top: 20px">
+          <div class="form-group"><label>Title</label><input id="resTitle"></div>
+          <div class="form-group"><label>Level</label><select id="resLevel"><option value="100">100L</option><option value="200">200L</option><option value="300">300L</option><option value="400">400L</option><option value="500">500L</option></select></div>
+          <div class="form-group"><label>Drive Link</label><input id="resLink"></div>
+          <button class="btn" onclick="saveResource()">Add Resource</button>
+        </div>
+      </section>
+
+      <!-- Payments -->
+      <section id="payments">
+        <h1 class="display">Transactions</h1>
+        <table id="payTable">
+          <thead><tr><th>Ref</th><th>Name</th><th>Matric</th><th>Amount</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <!-- Settings -->
+      <section id="settings">
+        <h1 class="display">System Settings</h1>
+        <div class="stat-card" style="margin-top: 20px">
+          <div class="form-group"><label>Ticker Text</label><input id="setTicker"></div>
+          <div class="form-group"><label>Notice Title</label><input id="setNoticeTitle"></div>
+          <div class="form-group"><label>Notice Body</label><textarea id="setNoticeBody"></textarea></div>
+          <button class="btn" onclick="saveSettings()">Update System</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Blog Editor Drawer (Simplified) -->
+  <div id="blogDrawer" style="display:none; position: fixed; right: 0; top: 0; width: 500px; height: 100vh; background: #111; border-left: 1px solid #222; padding: 30px; z-index: 100">
+    <h2 class="display">Edit Post</h2>
+    <div class="form-group"><label>Title</label><input id="editTitle"></div>
+    <div class="form-group"><label>Image URL</label><input id="editImg"></div>
+    <div class="form-group"><label>Content</label><div id="editor-container"></div></div>
+    <button class="btn" onclick="savePost()">Publish</button>
+    <button class="btn" onclick="closeBlogEditor()" style="background: #333">Cancel</button>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+    let quill = new Quill('#editor-container', { theme: 'snow' });
+
+    async function handleLogin() {
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPass').value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else checkAuth();
+    }
+
+    async function checkAuth() {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        document.getElementById('authScreen').style.display = 'none';
+        document.getElementById('adminDash').style.display = 'grid';
+        loadDashboardData();
+      }
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      event.target.classList.add('active');
+    }
+
+    async function loadDashboardData() {
+      const { data: posts } = await supabase.from('blog_posts').select('*');
+      const { data: res } = await supabase.from('resources').select('*');
+      const { data: pays } = await supabase.from('payments').select('*');
+      const { data: settings } = await supabase.from('system_settings').select('*').single();
+
+      document.getElementById('stat-blog').innerText = posts.length;
+      document.getElementById('stat-res').innerText = res.length;
+      document.getElementById('stat-pending').innerText = pays.filter(p => p.status === 'pending').length;
+      
+      const total = pays.filter(p => p.status === 'paid').reduce((acc, curr) => acc + curr.amount, 0);
+      document.getElementById('stat-dues').innerText = '₦' + total.toLocaleString();
+
+      // Render Tables
+      document.querySelector('#blogTable tbody').innerHTML = posts.map(p => `<tr><td>${p.title}</td><td>${p.category}</td><td>${new Date(p.published_at).toLocaleDateString()}</td><td><button onclick="deletePost('${p.id}')">Del</button></td></tr>`).join('');
+      document.querySelector('#payTable tbody').innerHTML = pays.map(p => `<tr><td>${p.transaction_ref}</td><td>${p.full_name}</td><td>${p.matric_number}</td><td>₦${p.amount}</td><td>${p.status}</td></tr>`).join('');
+      
+      document.getElementById('setTicker').value = settings.ticker_text;
+      document.getElementById('setNoticeTitle').value = settings.notice_title;
+      document.getElementById('setNoticeBody').value = settings.notice_body;
+    }
+
+    async function saveSettings() {
+      const { error } = await supabase.from('system_settings').update({
+        ticker_text: document.getElementById('setTicker').value,
+        notice_title: document.getElementById('setNoticeTitle').value,
+        notice_body: document.getElementById('setNoticeBody').value
+      }).eq('id', 1);
+      if (!error) alert('Settings updated');
+    }
+
+    function openBlogEditor() { document.getElementById('blogDrawer').style.display = 'block'; }
+    function closeBlogEditor() { document.getElementById('blogDrawer').style.display = 'none'; }
+
+    async function savePost() {
+      const post = {
+        title: document.getElementById('editTitle').value,
+        cover_image_url: document.getElementById('editImg').value,
+        content: quill.root.innerHTML,
+        excerpt: quill.getText().substring(0, 150) + '...'
+      };
+      const { error } = await supabase.from('blog_posts').insert([post]);
+      if (!error) { closeBlogEditor(); loadDashboardData(); }
+    }
+
+    async function handleLogout() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    checkAuth();
+  </script>
+</body>
+</html>
