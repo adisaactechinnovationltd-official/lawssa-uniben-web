@@ -5,7 +5,6 @@
 // --- CONFIG ---
 const SUPABASE_URL = 'YOUR_SUPABASE_URL';
 const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
-const KORAPAY_KEY = 'YOUR_KORAPAY_PUBLIC_KEY';
 let supabase = null;
 try {
     if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && window.supabase) {
@@ -49,8 +48,10 @@ function setLeaderBranch(branch, pill) {
     document.querySelectorAll('.branch-pill').forEach(p => p.classList.remove('active'));
     pill.classList.add('active');
     document.getElementById('executivesPanel').style.display = branch === 'executives' ? '' : 'none';
-    document.getElementById('senatePanel').style.display = branch === 'senate' ? '' : 'none';
+    document.getElementById('legislativePanel').style.display = branch === 'legislative' ? '' : 'none';
     document.getElementById('judiciaryPanel').style.display = branch === 'judiciary' ? '' : 'none';
+    document.getElementById('lsbaPanel').style.display = branch === 'lsba' ? '' : 'none';
+    document.getElementById('previousPanel').style.display = branch === 'previous' ? '' : 'none';
 }
 function viewResource(link) {
     if (!link || link.includes('example')) {
@@ -271,15 +272,17 @@ if (window.gsap && window.ScrollTrigger) {
 
     // INIT ALL
     window.addEventListener('DOMContentLoaded', () => {
-        if (window.Router) {
-            Router.init();
-        }
-
         animateHero();
         animateTickers();
         animateReveals();
         animateStats();
         animatePresident();
+    });
+
+    window.addEventListener('pageshow', () => {
+        if (window.ScrollTrigger) {
+            requestAnimationFrame(() => ScrollTrigger.refresh());
+        }
     });
 }
 

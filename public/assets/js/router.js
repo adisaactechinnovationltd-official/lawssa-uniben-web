@@ -3,7 +3,7 @@ const Router = (() => {
   const allSections = () => document.querySelectorAll('[data-section]');
   const allNavLinks = () => document.querySelectorAll('[data-nav]');
 
-  function navigate(target) {
+  function navigate(target, replaceState = false) {
     allSections().forEach(s => s.classList.remove('section--active'));
     allNavLinks().forEach(l => l.classList.remove('nav-link--active'));
 
@@ -13,8 +13,15 @@ const Router = (() => {
     if (sec) sec.classList.add('section--active');
     if (link) link.classList.add('nav-link--active');
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.history.pushState({ page: target }, '', `#${target}`);
+    if (replaceState) {
+      window.history.replaceState({ page: target }, '', `#${target}`);
+    } else {
+      window.history.pushState({ page: target }, '', `#${target}`);
+    }
+
+    if (window.ScrollTrigger) {
+      requestAnimationFrame(() => ScrollTrigger.refresh());
+    }
   }
 
   function init() {
@@ -30,6 +37,14 @@ const Router = (() => {
         }
       });
     });
+
+    window.addEventListener('popstate', (event) => {
+      const target = event.state?.page || window.location.hash.replace('#', '') || 'home';
+      navigate(target, true);
+    });
+
+    const initialTarget = window.location.hash.replace('#', '') || 'home';
+    navigate(initialTarget, true);
   }
 
   return { init, navigate };
