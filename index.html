@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LAWSSA UNIBEN | Official Digital Platform</title>
+    <title>LAWSA UNIBEN | Official Digital Platform</title>
     <meta name="description"
-        content="Official digital platform for the Law Students' Association (LAWSSA), University of Benin Branch — The Vanguard of Legal Excellence.">
+        content="Official digital platform for the Law Students' Association (LAWSA), University of Benin Branch — The Vanguard of Legal Excellence.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="public/assets/css/main.css">
@@ -30,7 +30,7 @@
 
 <body>
     <!--
-  LAWSSA UNIBEN | Official Digital Platform
+  LAWSA UNIBEN | Official Digital Platform
   Cleaned and refined for maintainability and best practices
 -->
 
@@ -41,7 +41,7 @@
         <div class="modal">
             <button class="modal__close" onclick="closeModal('noticeModal')" aria-label="Close">×</button>
             <div class="modal__body">
-                <div class="section-num">[LAWSSA — NOTICE]</div>
+                <div class="section-num">[LAWSA — NOTICE]</div>
                 <h2 class="display" id="noticeTitle"
                     style="font-size:var(--t-2xl);color:var(--text-h);margin-bottom:var(--s4);">Important Announcement
                 </h2>
@@ -67,15 +67,23 @@
         </div>
     </div>
 
+    <!-- Product Modal (Store) -->
+    <div class="modal-overlay" id="productModal" role="dialog" aria-modal="true">
+        <div class="modal modal--product">
+            <button class="modal__close" onclick="closeModal('productModal')" aria-label="Close">×</button>
+            <div id="productModalContent"></div>
+        </div>
+    </div>
+
     <!-- ═══════════════════════════════════════════════════════════════
      TICKER
      ═══════════════════════════════════════════════════════════════ -->
     <div class="ticker" id="mainTicker">
         <div class="ticker__track" id="tickerTrack">
-            <div class="ticker__item">Welcome to LAWSSA UNIBEN — Digital Home of the Proud Student Union
+            <div class="ticker__item">Welcome to LAWSA UNIBEN — The Official Digital Hub of Law Students at the University of Benin
                 &nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
                 Online &nbsp;&nbsp;●&nbsp;&nbsp; Access Academic Resources by Level &nbsp;&nbsp;●&nbsp;&nbsp;</div>
-            <div class="ticker__item">Welcome to LAWSSA UNIBEN — Digital Home of the Proud Student Union
+            <div class="ticker__item">Welcome to LAWSA UNIBEN — The Official Digital Hub of Law Students at the University of Benin
                 &nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
                 Online &nbsp;&nbsp;●&nbsp;&nbsp; Access Academic Resources by Level &nbsp;&nbsp;●&nbsp;&nbsp;</div>
         </div>
@@ -86,15 +94,16 @@
      ═══════════════════════════════════════════════════════════════ -->
     <nav class="navbar" role="navigation">
         <div class="container nav-inner">
-            <div class="nav-logo display" data-nav="home" style="cursor:pointer;">
-                LAWSSA <span>UNIBEN</span>
+            <div class="nav-logo display" data-nav="home" style="cursor:pointer; display: flex; flex-direction: row; align-items: center;">
+                <img src="./public/assets/images/logo.png" alt="LAWSA UNIBEN Logo" style="height:50px;width:auto;margin-right:var(--s2);">
+                LAWSA <span>UNIBEN</span>
             </div>
             <ul class="nav-links">
                 <li class="nav-link nav-link--active" data-nav="home">Home</li>
                 <li class="nav-link" data-nav="leaders">Leaders</li>
                 <li class="nav-link" data-nav="news">News</li>
                 <li class="nav-link" data-nav="resources">Resources</li>
-                <li class="nav-link" data-nav="pay">Pay Dues</li>
+                <li class="nav-link" data-nav="store">Store</li>
             </ul>
             <button class="nav-cta" data-nav="pay">Pay Dues →</button>
             <button class="hamburger" onclick="toggleMobile()" aria-label="Menu">
@@ -107,7 +116,7 @@
         <div class="nav-link" data-nav="leaders">Leaders</div>
         <div class="nav-link" data-nav="news">News</div>
         <div class="nav-link" data-nav="resources">Resources</div>
-        <div class="nav-link" data-nav="pay">Pay Dues</div>
+        <div class="nav-link" data-nav="store">Store</div>
     </div>
 
     <main>
@@ -136,7 +145,7 @@
                                 Resources</button>
                         </div>
                         <div class="hero__session">
-                            <span style="font-size:1.3em;vertical-align:middle;">⚖</span> Faculty of Law · UNIBEN
+                            <span style="font-size:1.3em;vertical-align:middle;">⚖</span> Law Students Association · UNIBEN
                         </div>
                     </div>
                     <div class="hero_right">
@@ -147,13 +156,23 @@
                     <div class="ticker__track" id="tickerTrack">
 
                         <div class="ticker__item hero_ticker__item">
-                            <span class="hero-ticker__text">LAWSSA UNIBEN</span>
-                            <img src="YOUR_PRESIDENT_IMAGE.jpg" alt="President" class="hero-ticker__img">
+                            <span class="hero-ticker__text">LAWSA UNIBEN</span>
+                            <img src="public/assets/images/Osatohanmwengoodnesseseseosa.webp" alt="President" class="hero-ticker__img">
                         </div>
 
                         <div class="ticker__item hero_ticker__item">
-                            <span class="hero-ticker__text">LAWSSA UNIBEN</span>
-                            <img src="YOUR_PRESIDENT_IMAGE.jpg" alt="President" class="hero-ticker__img">
+                            <span class="hero-ticker__text">LAWSA UNIBEN</span>
+                            <img src="public/assets/images/Osatohanmwengoodnesseseseosa.webp" alt="President" class="hero-ticker__img">
+                        </div>
+
+                        <div class="ticker__item hero_ticker__item">
+                            <span class="hero-ticker__text">LAWSA UNIBEN</span>
+                            <img src="public/assets/images/Osatohanmwengoodnesseseseosa.webp" alt="President" class="hero-ticker__img">
+                        </div>
+
+                        <div class="ticker__item hero_ticker__item">
+                            <span class="hero-ticker__text">LAWSA UNIBEN</span>
+                            <img src="public/assets/images/Osatohanmwengoodnesseseseosa.webp" alt="President" class="hero-ticker__img">
                         </div>
 
                     </div>
@@ -182,11 +201,11 @@
                 </div>
             </div>
 
-            <!-- WHAT WE DO — [LAWSSA — 01] -->
+            <!-- WHAT WE DO — [LAWSA — 01] -->
             <div class="what-we-do">
                 <div class="wwd-header">
                     <div class="wwd-header-left">
-                        <div class="section-num">[LAWSSA — 01]</div>
+                        <div class="section-num">[LAWSA — 01]</div>
                         <div class="wwd-big display">OUR<br>RESPONSIBILITY</div>
                     </div>
                     <div class="wwd-header-right">
@@ -212,7 +231,7 @@
                             <div class="wwd-item-title">Student Welfare & Advocacy</div>
                             <p class="wwd-item-text">The welfare of law students is our highest priority. From academic
                                 grievances and examination irregularities to campus safety and faculty-student
-                                relations, LAWSSA stands as the first line of defence for every member. We engage the
+                                relations, LAWSA stands as the first line of defence for every member. We engage the
                                 Faculty of Law and University management through structured dialogue and representation.
                             </p>
                         </div>
@@ -221,7 +240,7 @@
                         <div class="wwd-item-num">03</div>
                         <div class="wwd-item-body">
                             <div class="wwd-item-title">Social Events & Programmes</div>
-                            <p class="wwd-item-text">Beyond the lecture hall, LAWSSA organizes Law Week, annual dinners,
+                            <p class="wwd-item-text">Beyond the lecture hall, LAWSA organizes Law Week, annual dinners,
                                 inter-faculty debates, legal aid clinics, and social mixers that build lasting bonds
                                 among law students. We recognize that the social environment of a law student is as
                                 critical as their academic performance.</p>
@@ -240,11 +259,11 @@
                 </div>
             </div>
 
-            <!-- STATS BAND — [LAWSSA — 02] -->
+            <!-- STATS BAND — [LAWSA — 02] -->
             <div class="stats-band">
                 <div class="section-num"
                     style="grid-column:span 4;padding:var(--s4) var(--s7);border-bottom:1px solid #222;color:#555;">
-                    [LAWSSA — 02]</div>
+                    [LAWSA — 02]</div>
                 <div class="stat-cell">
                     <div class="stat-cell__num">500+</div>
                     <div class="stat-cell__label">Active Members</div>
@@ -263,56 +282,63 @@
                 </div>
             </div>
 
-            <!-- PRESIDENT'S MESSAGE — [LAWSSA — 03] -->
+            <!-- PRESIDENT'S MESSAGE — [LAWSA — 03] -->
             <div class="pres-section reveal">
                 <div class="pres-image-col">
-                    <img id="presImage" src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80"
-                        alt="President">
+                    <img id="presImage" src="public/assets/images/Osatohanmwengoodnesseseseosa.webp"
+                        alt="President's Image">
                     <div class="pres-img-overlay">
-                        <div class="pres-img-name display" id="presName">Goodness Osatohanmwen</div>
-                        <div class="pres-img-title">President, LAWSSA UNIBEN · 2025/2026</div>
+                        <div class="pres-img-name display" id="presName">Osatohanmwen Goodness Eseosa</div>
+                        <div class="pres-img-title">President, LAWSA UNIBEN · 2025/2026</div>
                     </div>
                 </div>
                 <div class="pres-content-col">
-                    <div class="section-num">[LAWSSA — 03]</div>
-                    <div class="pres-quote-mark display">"</div>
-                    <p class="pres-message-text" id="presText">
-                        On behalf of the Executive Council of the Law Students' Association, University of Benin, I
-                        welcome you to our official digital platform — a space built to serve, inform, and connect every
-                        law student at UNIBEN.<br><br>
-                        Our mission this academic session is simple: to leave the association better than we found it.
-                        We are committed to enhancing academic access, improving welfare structures, and ensuring that
-                        every student from 100L to 500L feels represented, heard, and empowered. This platform is one of
-                        the many steps we have taken toward that commitment.<br><br>
-                        Whether you are here to pay your association dues, access academic resources, or stay informed
-                        about the latest news from your association — we are glad you are here. The law is not just what
-                        we study; it is how we lead.
+                    <div class="section-num">[LAWSA — 03]</div>
+                        <div class="pres-quote-mark display">"<span>Welcome Message from the President</span></div>
+                        <p class="pres-message-text" id="presText">
+                        It is with great pleasure and a profound sense of pride that I welcome you to the official
+                        website of the Law Students Association (LAWSA), University of Benin.
+                        The creation of this website marks a significant milestone in the history of our Association.
+                        It represents our commitment to embracing innovation, improving accessibility, and creating a
+                        more connected and informed LAWSA community.<br>
+                        This platform has been designed to serve as a central space where Lawsans, alumni, partners, and
+                        visitors can access important information about our Association, stay updated on our activities,
+                        explore opportunities, and connect with the various initiatives that continue to shape our
+                        community.<br>
+                        As an Association built on excellence, leadership, and service, we recognize the importance of
+                        adapting to the changing demands of our time. This website is not only a digital platform but
+                        also a reflection of our vision for a modern, transparent, and progressive LAWSA.<br>
+                        I extend my sincere appreciation to everyone whose dedication and efforts contributed to bringing
+                        this vision to life. Your commitment continues to strengthen the foundation upon which future
+                        generations of Lawsans will build.<br>
+                        As you navigate this platform, I invite you to engage, participate, and remain connected with the
+                        remarkable journey of the Law Students Association, University of Benin.<br>
+                        Welcome to a new era of LAWSA.
                     </p>
                     <div class="pres-sig">
-                        <div class="pres-sig-name display" id="presSigName">Goodness Osatohanmwen</div>
-                        <div class="pres-sig-role">President, Law Students' Association (LAWSSA)<br>University of Benin
-                            Branch · 2025/2026</div>
+                        <div class="pres-sig-name display" id="presSigName">Osatohanmwen Goodness Eseosa</div>
+                        <div class="pres-sig-role">President, Law Students Association (LAWSA)<br>University of Benin</div>
                     </div>
                 </div>
             </div>
 
-            <!-- LEADERSHIP PREVIEW — [LAWSSA — 04] -->
+            <!-- LEADERSHIP PREVIEW — [LAWSA — 04] -->
             <div class="leaders-section reveal">
                 <div class="leaders-header">
-                    <div class="section-num">[LAWSSA — 04]</div>
+                    <div class="section-num">[LAWSA — 04]</div>
                     <div class="leaders-big display">LEADERSHIP</div>
                     <button class="btn btn--outline" onclick="Router.navigate('leaders')">See All Executives →</button>
                 </div>
                 <div class="leader-featured">
                     <div class="leader-featured__img">
                         <img id="presImgLeader"
-                            src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=800&q=80"
+                            src="public/assets/images/Osatohanmwengoodnesseseseosa.webp"
                             alt="President">
                     </div>
                     <div class="leader-featured__body">
                         <div class="leader-featured__role">● President · 2025/2026</div>
                         <div class="leader-featured__name display" id="presNameLeader">Goodness<br>Osatohanmwen</div>
-                        <p class="leader-featured__bio">Leading the 2025/2026 executive council of LAWSSA UNIBEN with a
+                        <p class="leader-featured__bio">Leading the 2025/2026 executive council of LAWSA UNIBEN with a
                             mandate centered on academic empowerment, welfare expansion, and digital transformation of
                             association services. A final-year law student with a distinguished record in student
                             governance and legal advocacy.</p>
@@ -326,14 +352,14 @@
                     <!-- Injected by JS; dummy fallback below -->
                     <div class="leader-card">
                         <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="VP">
+                                src="public/assets/images/leaders/headshots/vicepresidentegbadonobehimarielionel.webp" alt="VP">
                         </div>
                         <div class="leader-card__role">Vice President</div>
-                        <div class="leader-card__name display">Loading...</div>
+                        <div class="leader-card__name display">Egbadon Obehi Marie-lionel</div>
                     </div>
                     <div class="leader-card">
                         <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1494790108755-2616b612b890?w=200&q=80" alt="Sec">
+                                src="public/assets/images/headshots/" alt="Sec">
                         </div>
                         <div class="leader-card__role">Secretary General</div>
                         <div class="leader-card__name display">Loading...</div>
@@ -355,11 +381,11 @@
                 </div>
             </div>
 
-            <!-- RECENT NEWS — [LAWSSA — 05] -->
+            <!-- RECENT NEWS — [LAWSA — 05] -->
             <div class="news-section reveal">
                 <div class="news-header">
                     <div>
-                        <div class="section-num">[LAWSSA — 05]</div>
+                        <div class="section-num">[LAWSA — 05]</div>
                         <div class="news-big display">OUR<br>RECENT<br>NEWS</div>
                     </div>
                     <button class="btn btn--outline" onclick="Router.navigate('news')">See All News →</button>
@@ -373,7 +399,7 @@
                         <div class="news-card__body">
                             <div class="news-card__cat">Announcement</div>
                             <h3 class="news-card__title display">2025/2026 Dues Payment Now Open</h3>
-                            <p class="news-card__excerpt">The LAWSSA Financial Secretary announces that association dues
+                            <p class="news-card__excerpt">The LAWSA Financial Secretary announces that association dues
                                 payment for the 2025/2026 academic session is now open on our digital platform.</p>
                             <div class="news-card__meta"><span>Jan 15, 2026</span><span
                                     class="news-card__arrow">→</span></div>
@@ -386,7 +412,7 @@
                         <div class="news-card__body">
                             <div class="news-card__cat">Events</div>
                             <h3 class="news-card__title display">Law Week 2026 — Call for Participants</h3>
-                            <p class="news-card__excerpt">LAWSSA UNIBEN proudly announces the commencement of Law Week
+                            <p class="news-card__excerpt">LAWSA UNIBEN proudly announces the commencement of Law Week
                                 2026. All law students are encouraged to register and participate in debates, moot court
                                 sessions, and the annual legal quiz.</p>
                             <div class="news-card__meta"><span>Feb 3, 2026</span><span class="news-card__arrow">→</span>
@@ -399,8 +425,8 @@
                                 alt="News"></div>
                         <div class="news-card__body">
                             <div class="news-card__cat">Press</div>
-                            <h3 class="news-card__title display">LAWSSA Launches Official Digital Platform</h3>
-                            <p class="news-card__excerpt">In a landmark move toward digital transformation, LAWSSA
+                            <h3 class="news-card__title display">LAWSA Launches Official Digital Platform</h3>
+                            <p class="news-card__excerpt">In a landmark move toward digital transformation, LAWSA
                                 UNIBEN has officially launched its digital platform — the first of its kind among law
                                 student associations in Edo State.</p>
                             <div class="news-card__meta"><span>Mar 1, 2026</span><span class="news-card__arrow">→</span>
@@ -410,7 +436,21 @@
                 </div>
             </div>
 
-            <!-- ACADEMIC CALENDAR — [LAWSSA — 06] -->
+            <!-- STORE PREVIEW (Homepage) -->
+            <div class="store-section reveal">
+                <div class="news-header">
+                    <div>
+                        <div class="section-num">[LAWSA — STORE]</div>
+                        <div class="news-big display">OUR<br>STORE</div>
+                    </div>
+                    <button class="btn btn--outline" onclick="Router.navigate('store')">Visit Store →</button>
+                </div>
+                <div class="news-grid" id="storePreviewGrid">
+                    <!-- Store cards will be injected here -->
+                </div>
+            </div>
+
+            <!-- ACADEMIC CALENDAR — [LAWSA — 06] -->
             <div class="calendar-section reveal">
                 <div class="cal-header">
                     <div class="cal-header-title">Academic Calendar</div>
@@ -421,11 +461,11 @@
             </div>
 
 
-            <!-- CONTACT — [LAWSSA — 10] -->
+
             <div class="contact-section reveal">
                 <div class="contact-left">
                     <div>
-                        <div class="section-num" style="color:#555;">[LAWSSA — 10]</div>
+                        <div class="section-num" style="color:#555;">[LAWSA — 10]</div>
                         <div class="contact-big display">TALK<br>TO US</div>
                     </div>
                     <div class="contact-details">
@@ -433,7 +473,7 @@
                             <div class="contact-detail__icon">✉</div>
                             <div>
                                 <div class="contact-detail__label">Email</div>
-                                <div class="contact-detail__val">lawssauniben@gmail.com</div>
+                                <div class="contact-detail__val">lawsauniben@gmail.com</div>
                             </div>
                         </div>
                         <div class="contact-detail">
@@ -455,7 +495,7 @@
                             <div class="contact-detail__icon">ig</div>
                             <div>
                                 <div class="contact-detail__label">Instagram</div>
-                                <div class="contact-detail__val">@lawssauniben</div>
+                                <div class="contact-detail__val">@lawsauniben</div>
                             </div>
                         </div>
                     </div>
@@ -485,52 +525,43 @@
                 </div>
             </div>
 
-            <!-- FOOTER -->
-            <footer class="footer">
-                <div class="footer-top">
-                    <div class="footer-brand">
-                        <div class="footer-logo display">LAWSSA <span>UNIBEN</span></div>
-                        <p class="footer-tagline">Digital Home of the proud Law Students' Association of the University
-                            of Benin Branch. Crafted with purpose, built for excellence.</p>
+            <!-- MERCHANDISE & FACULTY RULES — [LAWSA — 07] -->
+            <div class="home-extra reveal">
+                <div class="home-extra__grid container">
+                    <div class="merch-card">
+                        <div class="section-num">[LAWSA — 07]</div>
+                        <div class="merch-card__title display">Official<br><span class="text-gold">LAWSA Merch</span></div>
+                        <p class="merch-card__text">Shop exclusive LAWSA UNIBEN gear crafted for law students and executive members. From branded notebooks to lapel pins, our merchandise celebrates your pride in the faculty.</p>
+                        <div class="merch-items">
+                            <span>LAWSA Tote Bag</span>
+                            <span>Executive Notebook</span>
+                            <span>Gold Accent Pin</span>
+                        </div>
+                        <button class="btn btn--outline" onclick="Router.navigate('pay')">Order Now</button>
                     </div>
-                    <div>
-                        <div class="footer-col-title">Navigate</div>
-                        <nav class="footer-nav">
-                            <a data-nav="home">Home</a>
-                            <a data-nav="leaders">Leaders</a>
-                            <a data-nav="news">News & Updates</a>
-                            <a data-nav="resources">Resources</a>
-                            <a data-nav="pay">Pay Dues</a>
-                        </nav>
-                    </div>
-                    <div>
-                        <div class="footer-col-title">Association</div>
-                        <nav class="footer-nav">
-                            <a href="#">About LAWSSA</a>
-                            <a href="#">Our Constitution</a>
-                            <a href="#">Achievements</a>
-                            <a href="#">Membership</a>
-                            <a href="#">FAQs</a>
-                        </nav>
-                    </div>
-                    <div>
-                        <div class="footer-col-title">Contact</div>
-                        <nav class="footer-nav">
-                            <a href="mailto:lawssauniben@gmail.com">lawssauniben@gmail.com</a>
-                            <a href="#">Faculty of Law, UNIBEN</a>
-                            <a href="#">Benin City, Edo State</a>
-                            <a href="#">@lawssauniben</a>
-                        </nav>
+                    <div class="rules-card">
+                        <div class="section-num">[LAWSA — 08]</div>
+                        <div class="rules-card__title display">Faculty Rules &<br><span class="text-gold">Conduct</span></div>
+                        <ul class="rules-list">
+                            <li>Attend all faculty meetings and academic sessions punctually.</li>
+                            <li>Respect university property, staff, and fellow students at all times.</li>
+                            <li>Report concerns through official LAWSA channels before escalation.</li>
+                            <li>Wear your faculty ID in law faculty common areas and during events.</li>
+                        </ul>
+                        <p class="rules-note">These guidelines ensure a respectful, safe, and professional environment for every LAWSA member.</p>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved · 2025/2026 Academic Session
-                    </div>
-                    <div class="footer-credit">Designed & Developed by <a href="https://adisaactech.com" target="_blank"
-                            rel="noopener">Adisaac Tech Innovations Ltd</a></div>
-                </div>
-            </footer>
+            </div>
 
+            <!-- ACADEMIC CALENDAR — [LAWSA — 06] -->
+            <div class="calendar-section reveal">
+                <div class="cal-header">
+                    <div class="cal-header-title">Academic Calendar</div>
+                </div>
+                <div class="cal-grid" id="calendarGrid">
+                    <!-- Calendar items will be injected here -->
+                </div>
+            </div>
         </section><!-- /home -->
 
         <!-- ═══════════════════════════════════════════════════════════════
@@ -538,7 +569,7 @@
      ═══════════════════════════════════════════════════════════════ -->
         <section id="leaders" data-section="leaders">
             <div class="leaders-page-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
-                <div class="section-num">[LAWSSA — LEADERSHIP]</div>
+                <div class="section-num">[LAWSA — LEADERSHIP]</div>
                 <div class="leaders-page-title display">
                     Executive<br><span class="text-gold">Leadership</span>
                 </div>
@@ -558,7 +589,7 @@
                     <div class="leader-featured__body">
                         <div class="leader-featured__role">● President · 2025/2026 Session</div>
                         <div class="leader-featured__name display">Goodness<br>Osatohanmwen</div>
-                        <p class="leader-featured__bio">President of LAWSSA UNIBEN for the 2025/2026 academic session. A
+                        <p class="leader-featured__bio">President of LAWSA UNIBEN for the 2025/2026 academic session. A
                             dedicated advocate for student welfare and academic excellence. Elected on a platform of
                             digital transformation, welfare expansion, and professional development for all law students
                             at UNIBEN.</p>
@@ -572,10 +603,10 @@
                     <!-- Injected by JS or fallback -->
                     <div class="leader-card">
                         <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80" alt="">
+                                src="public/assets/images/leaders/headshots/vicepresidentegbadonobehimarielionel.webp alt="">
                         </div>
                         <div class="leader-card__role">Vice President</div>
-                        <div class="leader-card__name display">Name Here</div>
+                        <div class="leader-card__name display">Egbadon Obehi Marie-Lionel</div>
                         <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a><a href="#"
                                 class="leader-card__social">in</a></div>
                     </div>
@@ -644,13 +675,20 @@
                 <p style="color:var(--text-m);">Judiciary details will be populated from the admin dashboard.</p>
             </div>
 
-            <!-- Footer repeat -->
-            <footer class="footer" style="margin-top:0;">
-                <div class="footer-bottom">
-                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
-                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
+        </section>
+
+        <!-- STORE PAGE — [LAWSA — STORE] -->
+        <section id="store" data-section="store">
+            <div class="store-page container">
+                <div class="section-header">
+                    <div>
+                        <div class="section-num">[LAWSA — STORE]</div>
+                        <h2 class="section-title display">Our Store</h2>
+                    </div>
+                    <p class="section-copy">Purchase official LAWSA UNIBEN gear via bank transfer. Send your receipt over WhatsApp after payment to complete your order.</p>
                 </div>
-            </footer>
+                <div class="news-grid" id="storeGrid"></div>
+            </div>
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════
@@ -658,7 +696,7 @@
      ═══════════════════════════════════════════════════════════════ -->
         <section id="news" data-section="news">
             <div class="news-page-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
-                <div class="section-num">[LAWSSA — NEWS]</div>
+                <div class="section-num">[LAWSA — NEWS]</div>
                 <div class="news-page-title display">News &<br><span class="text-gold">Publications</span></div>
                 <div class="news-filter-bar" id="newsFilterBar">
                     <button class="filter-btn active" data-filter="all">All</button>
@@ -676,7 +714,7 @@
                     <div class="news-card__body">
                         <div class="news-card__cat">Announcements</div>
                         <h3 class="news-card__title display">2025/2026 Dues Payment Now Open</h3>
-                        <p class="news-card__excerpt">The LAWSSA Financial Secretary announces that association dues
+                        <p class="news-card__excerpt">The LAWSA Financial Secretary announces that association dues
                             payment for the 2025/2026 academic session is now open on this digital platform. All members
                             are urged to pay promptly to enjoy full membership benefits.</p>
                         <div class="news-card__meta"><span>Jan 15, 2026</span><span class="news-card__arrow">→</span>
@@ -690,7 +728,7 @@
                     <div class="news-card__body">
                         <div class="news-card__cat">Events</div>
                         <h3 class="news-card__title display">Law Week 2026 — Call for Participants</h3>
-                        <p class="news-card__excerpt">LAWSSA UNIBEN proudly announces the commencement of Law Week 2026.
+                        <p class="news-card__excerpt">LAWSA UNIBEN proudly announces the commencement of Law Week 2026.
                             All law students are encouraged to register and participate in debates, moot court sessions,
                             and the annual legal quiz competition.</p>
                         <div class="news-card__meta"><span>Feb 3, 2026</span><span class="news-card__arrow">→</span>
@@ -703,8 +741,8 @@
                             loading="lazy"></div>
                     <div class="news-card__body">
                         <div class="news-card__cat">Press</div>
-                        <h3 class="news-card__title display">LAWSSA Launches Official Digital Platform</h3>
-                        <p class="news-card__excerpt">In a landmark move, LAWSSA UNIBEN has officially launched its
+                        <h3 class="news-card__title display">LAWSA Launches Official Digital Platform</h3>
+                        <p class="news-card__excerpt">In a landmark move, LAWSA UNIBEN has officially launched its
                             digital platform — the first of its kind among law student associations in Edo State. The
                             platform enables online dues payment, resource access, and news distribution.</p>
                         <div class="news-card__meta"><span>Mar 1, 2026</span><span class="news-card__arrow">→</span>
@@ -718,7 +756,7 @@
                     <div class="news-card__body">
                         <div class="news-card__cat">Events</div>
                         <h3 class="news-card__title display">Annual Moot Court Competition 2026</h3>
-                        <p class="news-card__excerpt">The annual LAWSSA UNIBEN Moot Court Competition returns this
+                        <p class="news-card__excerpt">The annual LAWSA UNIBEN Moot Court Competition returns this
                             February. Open to all levels, this prestigious competition offers winners a place in the
                             inter-university competition representing UNIBEN.</p>
                         <div class="news-card__meta"><span>Feb 20, 2026</span><span class="news-card__arrow">→</span>
@@ -733,7 +771,7 @@
                         <div class="news-card__cat">Announcements</div>
                         <h3 class="news-card__title display">New Academic Resources Added — All Levels</h3>
                         <p class="news-card__excerpt">The Academic Director is pleased to announce the addition of over
-                            40 new resources to the LAWSSA digital library, covering past questions and lecture notes
+                            40 new resources to the LAWSA digital library, covering past questions and lecture notes
                             from 100L to 500L.</p>
                         <div class="news-card__meta"><span>Jan 28, 2026</span><span class="news-card__arrow">→</span>
                         </div>
@@ -745,8 +783,8 @@
                             loading="lazy"></div>
                     <div class="news-card__body">
                         <div class="news-card__cat">Press</div>
-                        <h3 class="news-card__title display">LAWSSA Welfare Fund — Call for Applications</h3>
-                        <p class="news-card__excerpt">The LAWSSA Welfare Committee invites eligible law students
+                        <h3 class="news-card__title display">LAWSA Welfare Fund — Call for Applications</h3>
+                        <p class="news-card__excerpt">The LAWSA Welfare Committee invites eligible law students
                             experiencing financial hardship to apply for the 2026 Student Welfare Fund. Applications are
                             open to dues-paying members of all levels.</p>
                         <div class="news-card__meta"><span>Mar 15, 2026</span><span class="news-card__arrow">→</span>
@@ -754,20 +792,14 @@
                     </div>
                 </article>
             </div>
-            <footer class="footer">
-                <div class="footer-bottom">
-                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
-                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
-                </div>
-            </footer>
         </section>
 
-        <!-- ═══════════════════════════════════════════════════════════════
+        <!-- ════════════════════════════════════════════════════════
      SECTION: RESOURCES
      ═══════════════════════════════════════════════════════════════ -->
         <section id="resources" data-section="resources">
             <div class="resources-header container" style="padding-left:var(--s7);padding-right:var(--s7);">
-                <div class="section-num">[LAWSSA — RESOURCES]</div>
+                <div class="section-num">[LAWSA — RESOURCES]</div>
                 <div class="resources-title display">Academic<br><span class="text-gold">Resources</span></div>
                 <div class="resources-level-tabs" id="levelTabs">
                     <button class="level-tab active" data-level="all">All Levels</button>
@@ -776,6 +808,11 @@
                     <button class="level-tab" data-level="300">300 Level</button>
                     <button class="level-tab" data-level="400">400 Level</button>
                     <button class="level-tab" data-level="500">500 Level</button>
+                </div>
+                <div class="resources-filter-bar">
+                    <button class="filter-btn active" data-category="all">All Resources</button>
+                    <button class="filter-btn" data-category="faculty">Faculty Resources</button>
+                    <button class="filter-btn" data-category="general">General Resources</button>
                 </div>
             </div>
             <div class="resources-grid" id="resourcesGrid">
@@ -853,12 +890,6 @@
                     <div class="resource-card__arrow">→</div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="footer-bottom">
-                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
-                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
-                </div>
-            </footer>
         </section>
 
         <!-- ═══════════════════════════════════════════════════════════════
@@ -868,7 +899,7 @@
             <div class="pay-layout">
                 <div class="pay-info">
                     <div>
-                        <div class="section-num" style="color:#555;">[LAWSSA — DUES]</div>
+                        <div class="section-num" style="color:#555;">[LAWSA — DUES]</div>
                         <div class="pay-big display">Association<br><span class="text-gold">Dues</span></div>
                         <p
                             style="color:#777;margin-top:var(--s4);font-size:var(--t-sm);max-width:380px;line-height:1.75;">
@@ -881,7 +912,7 @@
                         <div class="pay-card-type">
                             <div class="pay-card-type__label">Faculty Dues</div>
                             <div class="pay-card-type__amount display">₦3,000</div>
-                            <div class="pay-card-type__desc">Covers all LAWSSA programs, events, resources, and advocacy
+                            <div class="pay-card-type__desc">Covers all LAWSA programs, events, resources, and advocacy
                                 for the 2025/2026 session.</div>
                         </div>
                         <div class="pay-card-type">
@@ -948,18 +979,62 @@
                     </form>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="footer-bottom">
-                    <div class="footer-copy">© 2026 LAWSSA UNIBEN — All Rights Reserved</div>
-                    <div class="footer-credit">Developed by <a href="#">Adisaac Tech Innovations Ltd</a></div>
-                </div>
-            </footer>
         </section>
 
     </main>
 
+    <!-- Unified Footer (moved to bottom) -->
+    <div id="siteFooterContainer"></div>
+
+    <template id="siteFooterTemplate">
+    <footer class="footer">
+        <div class="footer-top container">
+            <div class="footer-brand">
+                <div class="footer-logo display">LAWSA <span>UNIBEN</span></div>
+                <p class="footer-tagline">Digital Home of the Law Students' Association, University of Benin. Built for clarity, connection, and excellence.</p>
+            </div>
+            <div>
+                <div class="footer-col-title">Navigate</div>
+                <nav class="footer-nav">
+                    <a data-nav="home">Home</a>
+                    <a data-nav="leaders">Leaders</a>
+                    <a data-nav="news">News & Updates</a>
+                    <a data-nav="resources">Resources</a>
+                    <a data-nav="store">Store</a>
+                    <a data-nav="pay">Pay Dues</a>
+                </nav>
+            </div>
+            <div>
+                <div class="footer-col-title">Association</div>
+                <nav class="footer-nav">
+                    <a href="#">About LAWSA</a>
+                    <a href="#">Our Constitution</a>
+                    <a href="#">Achievements</a>
+                    <a href="#">Membership</a>
+                    <a href="#">FAQs</a>
+                </nav>
+            </div>
+            <div>
+                <div class="footer-col-title">Contact</div>
+                <nav class="footer-nav">
+                    <a href="mailto:lawsauniben@gmail.com">lawsauniben@gmail.com</a>
+                    <a href="#">Faculty of Law, UNIBEN</a>
+                    <a href="#">Benin City, Edo State</a>
+                    <a href="#">@lawsauniben</a>
+                </nav>
+            </div>
+        </div>
+        <div class="footer-bottom container">
+            <div class="footer-copy">© 2026 LAWSA UNIBEN — All Rights Reserved · 2025/2026 Academic Session</div>
+            <div class="footer-credit">Designed & Developed by <a href="https://adisaactech.com" target="_blank" rel="noopener">Adisaac Tech Innovations Ltd</a></div>
+        </div>
+    </footer>
+    </template>
+
     <!-- Your main JS file -->
     <script src="public/assets/js/main.js"></script>
+    <script src="public/assets/js/api.js"></script>
+    <script src="public/assets/js/store.js"></script>
     <script>
         // All scripts are loaded with defer for performance.
         // ════════════════════════════════════════════════════════
@@ -1170,7 +1245,7 @@
     <div class="blog-modal__body">
       <div class="blog-modal__cat">${post.category || 'News'}</div>
       <h1 class="blog-modal__title">${post.title}</h1>
-      <div class="blog-modal__meta">By ${post.author || 'LAWSSA UNIBEN'} · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
+      <div class="blog-modal__meta">By ${post.author || 'LAWSA UNIBEN'} · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
       <div class="blog-modal__content">${DOMPurify.sanitize(post.content)}</div>
     </div>`;
             openModal('blogModal');
@@ -1178,12 +1253,12 @@
 
         // Dummy blog modal for hardcoded news cards
         const dummyPosts = [
-            { title: '2025/2026 Dues Payment Now Open', category: 'Announcements', published_at: '2026-01-15', content: '<p>The LAWSSA Financial Secretary is pleased to announce that association dues payment for the 2025/2026 academic session is now open on this platform.</p><p>All members are urged to pay their Faculty Dues (₦3,000) and Departmental Dues (₦1,500) promptly to enjoy full membership benefits for the session.</p><p>Payments are processed securely via KoraPay, and an official PDF receipt is automatically generated upon successful payment.</p>', cover_image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80' },
-            { title: 'Law Week 2026 — Call for Participants', category: 'Events', published_at: '2026-02-03', content: '<p>LAWSSA UNIBEN proudly announces the commencement of Law Week 2026, scheduled to hold from February 10–15, 2026.</p><p>This year\'s theme is <em>"The Law as an Instrument of Justice and Social Transformation."</em></p><p>Events include: Inter-level moot court competition, legal debate, law quiz bowl, keynote address by a distinguished jurist, and the annual Law Dinner on the final day.</p><p>Registration is open to all dues-paying members. Contact the Social Director for more details.</p>', cover_image_url: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80' },
-            { title: 'LAWSSA Launches Official Digital Platform', category: 'Press', published_at: '2026-03-01', content: '<p>In a landmark step toward the digital transformation of student association services, LAWSSA UNIBEN has officially launched its digital platform — the first of its kind among faculty-level law student associations in Edo State.</p><p>The platform, built in partnership with Adisaac Tech Innovations Ltd, offers online dues payment, academic resource access, news and announcement distribution, executive leadership profiles, and an academic calendar.</p><p>The President described the launch as "a defining moment in how LAWSSA serves its members."</p>', cover_image_url: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80' },
-            { title: 'Annual Moot Court Competition 2026', category: 'Events', published_at: '2026-02-20', content: '<p>The annual LAWSSA UNIBEN Moot Court Competition returns this February, open to all levels from 100L to 500L.</p><p>Winners of this prestigious competition represent UNIBEN at the inter-university NULAI Moot Court Competition.</p><p>Register with the Academic Director before February 12, 2026. Entry is free for all dues-paying members.</p>', cover_image_url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
-            { title: 'New Academic Resources Added — All Levels', category: 'Announcements', published_at: '2026-01-28', content: '<p>The LAWSSA Academic Director is pleased to announce the addition of over 40 new resources to the LAWSSA digital library, covering past questions, lecture notes, and textbook references from 100L to 500L.</p><p>Resources are accessible via the Resources section of this platform. Filter by your level to find relevant materials.</p>', cover_image_url: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600&q=80' },
-            { title: 'LAWSSA Welfare Fund — Call for Applications', category: 'Press', published_at: '2026-03-15', content: '<p>The LAWSSA Welfare Committee invites eligible law students facing financial hardship to apply for the 2026 Student Welfare Fund.</p><p>Applications are open to dues-paying members of all levels. Criteria include demonstrated financial need, academic standing, and a brief statement of circumstances.</p><p>Submit applications to the Welfare Director in writing or via email by April 1, 2026.</p>', cover_image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&q=80' }
+            { title: '2025/2026 Dues Payment Now Open', category: 'Announcements', published_at: '2026-01-15', content: '<p>The LAWSA Financial Secretary is pleased to announce that association dues payment for the 2025/2026 academic session is now open on this platform.</p><p>All members are urged to pay their Faculty Dues (₦3,000) and Departmental Dues (₦1,500) promptly to enjoy full membership benefits for the session.</p><p>Payments are processed securely via KoraPay, and an official PDF receipt is automatically generated upon successful payment.</p>', cover_image_url: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80' },
+            { title: 'Law Week 2026 — Call for Participants', category: 'Events', published_at: '2026-02-03', content: '<p>LAWSA UNIBEN proudly announces the commencement of Law Week 2026, scheduled to hold from February 10–15, 2026.</p><p>This year\'s theme is <em>"The Law as an Instrument of Justice and Social Transformation."</em></p><p>Events include: Inter-level moot court competition, legal debate, law quiz bowl, keynote address by a distinguished jurist, and the annual Law Dinner on the final day.</p><p>Registration is open to all dues-paying members. Contact the Social Director for more details.</p>', cover_image_url: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=600&q=80' },
+            { title: 'LAWSA Launches Official Digital Platform', category: 'Press', published_at: '2026-03-01', content: '<p>In a landmark step toward the digital transformation of student association services, LAWSA UNIBEN has officially launched its digital platform — the first of its kind among faculty-level law student associations in Edo State.</p><p>The platform, built in partnership with Adisaac Tech Innovations Ltd, offers online dues payment, academic resource access, news and announcement distribution, executive leadership profiles, and an academic calendar.</p><p>The President described the launch as "a defining moment in how LAWSA serves its members."</p>', cover_image_url: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80' },
+            { title: 'Annual Moot Court Competition 2026', category: 'Events', published_at: '2026-02-20', content: '<p>The annual LAWSA UNIBEN Moot Court Competition returns this February, open to all levels from 100L to 500L.</p><p>Winners of this prestigious competition represent UNIBEN at the inter-university NULAI Moot Court Competition.</p><p>Register with the Academic Director before February 12, 2026. Entry is free for all dues-paying members.</p>', cover_image_url: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80' },
+            { title: 'New Academic Resources Added — All Levels', category: 'Announcements', published_at: '2026-01-28', content: '<p>The LAWSA Academic Director is pleased to announce the addition of over 40 new resources to the LAWSA digital library, covering past questions, lecture notes, and textbook references from 100L to 500L.</p><p>Resources are accessible via the Resources section of this platform. Filter by your level to find relevant materials.</p>', cover_image_url: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?w=600&q=80' },
+            { title: 'LAWSA Welfare Fund — Call for Applications', category: 'Press', published_at: '2026-03-15', content: '<p>The LAWSA Welfare Committee invites eligible law students facing financial hardship to apply for the 2026 Student Welfare Fund.</p><p>Applications are open to dues-paying members of all levels. Criteria include demonstrated financial need, academic standing, and a brief statement of circumstances.</p><p>Submit applications to the Welfare Director in writing or via email by April 1, 2026.</p>', cover_image_url: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&q=80' }
         ];
 
         function openBlogDummy(idx) {
@@ -1194,7 +1269,7 @@
     <div class="blog-modal__body">
       <div class="blog-modal__cat">${post.category}</div>
       <h1 class="blog-modal__title display">${post.title}</h1>
-      <div class="blog-modal__meta">By LAWSSA UNIBEN Executive Council · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
+      <div class="blog-modal__meta">By LAWSA UNIBEN Executive Council · ${new Date(post.published_at).toLocaleDateString('en-NG', { dateStyle: 'long' })}</div>
       <div class="blog-modal__content">${post.content}</div>
     </div>`;
             openModal('blogModal');
@@ -1221,7 +1296,7 @@
             const phone = document.getElementById('payPhone').value.trim();
             const type = document.querySelector('input[name="duesType"]:checked').value;
             const amount = type === 'faculty' ? 3000 : 1500;
-            const ref = `LAWSSA-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
+            const ref = `LAWSA-${Date.now()}-${Math.random().toString(36).substr(2, 5).toUpperCase()}`;
 
             // Validate
             let valid = true;
@@ -1269,7 +1344,7 @@
                 const { jsPDF } = window.jspdf;
                 const doc = new jsPDF();
                 doc.setFontSize(18); doc.setFont('helvetica', 'bold');
-                doc.text('LAWSSA UNIBEN — PAYMENT RECEIPT', 20, 25);
+                doc.text('LAWSA UNIBEN — PAYMENT RECEIPT', 20, 25);
                 doc.setFontSize(10); doc.setFont('helvetica', 'normal');
                 doc.text(`Faculty of Law, University of Benin · 2025/2026 Academic Session`, 20, 35);
                 doc.line(20, 40, 190, 40);
@@ -1279,9 +1354,9 @@
                     doc.setFont('helvetica', 'normal'); doc.text(val, 80, 55 + i * 12);
                 });
                 doc.line(20, 170, 190, 170);
-                doc.setFontSize(9); doc.text('This receipt is an official document of LAWSSA UNIBEN. Keep it for your records.', 20, 178);
+                doc.setFontSize(9); doc.text('This receipt is an official document of LAWSA UNIBEN. Keep it for your records.', 20, 178);
                 doc.text('Digital Platform by Adisaac Tech Innovations Ltd', 20, 185);
-                doc.save(`LAWSSA_Receipt_${ref}.pdf`);
+                doc.save(`LAWSA_Receipt_${ref}.pdf`);
             }
 
             // Show success
@@ -1297,7 +1372,7 @@
             e.preventDefault();
             openModal('noticeModal');
             document.getElementById('noticeTitle').textContent = 'Message Sent!';
-            document.getElementById('noticeBody').textContent = 'Thank you for reaching out. The LAWSSA Executive Council will respond within 48 hours.';
+            document.getElementById('noticeBody').textContent = 'Thank you for reaching out. The LAWSA Executive Council will respond within 48 hours.';
             e.target.reset();
         }
 

@@ -58,15 +58,21 @@
   <div id="authScreen">
     <div class="login-card">
       <h1 class="display" style="margin-bottom: 20px">ADMIN <span style="color: var(--color-gold)">PORTAL</span></h1>
+      <div style="margin-bottom: var(--s4); font-size: 0.9rem; color: #ccc; line-height: 1.5;">
+        Use the admin login below to access the dashboard. If Supabase is not configured, local fallback credentials will work.
+      </div>
       <div class="form-group">
         <label>Email</label>
-        <input type="email" id="adminEmail">
+        <input type="email" id="adminEmail" placeholder="admin@lawsauniben.com">
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" id="adminPass">
+        <input type="password" id="adminPass" placeholder="Lawsa2026!">
       </div>
       <button class="btn" onclick="handleLogin()" style="width: 100%">Sign In</button>
+      <div style="margin-top: var(--s4); font-size: 0.85rem; color: #bbb;">
+        Fallback: admin@lawsauniben.com / Lawsa2026!
+      </div>
     </div>
   </div>
 
@@ -78,6 +84,7 @@
         <div class="nav-item active" onclick="showSection('overview', event)">Overview</div>
         <div class="nav-item" onclick="showSection('blog', event)">Blog Posts</div>
         <div class="nav-item" onclick="showSection('resources', event)">Resources</div>
+        <div class="nav-item" onclick="showSection('store', event)">Store Items</div>
         <div class="nav-item" onclick="showSection('payments', event)">Payments</div>
         <div class="nav-item" onclick="showSection('settings', event)">Settings</div>
         <div class="nav-item" onclick="handleLogout()" style="margin-top: 40px; color: #e05252">Sign Out</div>
@@ -119,6 +126,22 @@
         </div>
       </section>
 
+      <!-- Store Management -->
+      <section id="store">
+        <h1 class="display">Manage Store Items</h1>
+        <div class="stat-card" style="margin-top: 20px">
+          <div class="form-group"><label>Title</label><input id="itemTitle"></div>
+          <div class="form-group"><label>Price (NGN)</label><input id="itemPrice" type="number"></div>
+          <div class="form-group"><label>Image URL</label><input id="itemImage"></div>
+          <div class="form-group"><label>SKU</label><input id="itemSku"></div>
+          <button class="btn" onclick="saveStoreItem()">Add Item</button>
+        </div>
+        <table id="storeTable">
+          <thead><tr><th>Title</th><th>Price</th><th>SKU</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
       <!-- Payments -->
       <section id="payments">
         <h1 class="display">Transactions</h1>
@@ -151,88 +174,51 @@
     <button class="btn" onclick="closeBlogEditor()" style="background: #333">Cancel</button>
   </div>
 
-  <script>
-    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-    const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+      const SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+      const hasSupabase = SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_ANON !== 'YOUR_SUPABASE_ANON_KEY' && window.supabase;
+      window.supabase = hasSupabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON) : null;
 
-    let quill = new Quill('#editor-container', { theme: 'snow' });
+      const quill = new Quill('#editor-container', { theme: 'snow' });
 
-    async function handleLogin() {
-      const email = document.getElementById('adminEmail').value;
-      const password = document.getElementById('adminPass').value;
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) alert(error.message);
-      else checkAuth();
-    }
+      window.handleLogin = async function () {
+        const email = document.getElementById('adminEmail').value.trim();
+        const password = document.getElementById('adminPass').value;
 
-    async function checkAuth() {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+        if (hasSupabase) {
+          const { data, error } = await window.supabase.auth.signInWithPassword({ email, password });
+          if (error) return alert(error.message);
+          return checkAuth();
+        }
+
+        if (email === 'admin@lawsauniben.com' && password === 'Lawsa2026!') {
+          return signInFallback();
+        }
+
+        alert('Invalid credentials. Use admin@lawsauniben.com / Lawsa2026! or configure Supabase.');
+      };
+
+      window.signInFallback = function () {
         document.getElementById('authScreen').style.display = 'none';
         document.getElementById('adminDash').style.display = 'grid';
         loadDashboardData();
-      }
-    }
-
-    function showSection(id, ev) {
-      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if (ev && ev.target) ev.target.classList.add('active');
-    }
-
-    async function loadDashboardData() {
-      const { data: posts } = await supabase.from('blog_posts').select('*');
-      const { data: res } = await supabase.from('resources').select('*');
-      const { data: pays } = await supabase.from('payments').select('*');
-      const { data: settings } = await supabase.from('system_settings').select('*').single();
-
-      document.getElementById('stat-blog').innerText = posts.length;
-      document.getElementById('stat-res').innerText = res.length;
-      document.getElementById('stat-pending').innerText = pays.filter(p => p.status === 'pending').length;
-      
-      const total = pays.filter(p => p.status === 'paid').reduce((acc, curr) => acc + curr.amount, 0);
-      document.getElementById('stat-dues').innerText = '₦' + total.toLocaleString();
-
-      // Render Tables
-      document.querySelector('#blogTable tbody').innerHTML = posts.map(p => `<tr><td>${p.title}</td><td>${p.category}</td><td>${new Date(p.published_at).toLocaleDateString()}</td><td><button onclick="deletePost('${p.id}')">Del</button></td></tr>`).join('');
-      document.querySelector('#payTable tbody').innerHTML = pays.map(p => `<tr><td>${p.transaction_ref}</td><td>${p.full_name}</td><td>${p.matric_number}</td><td>₦${p.amount}</td><td>${p.status}</td></tr>`).join('');
-      
-      document.getElementById('setTicker').value = settings.ticker_text;
-      document.getElementById('setNoticeTitle').value = settings.notice_title;
-      document.getElementById('setNoticeBody').value = settings.notice_body;
-    }
-
-    async function saveSettings() {
-      const { error } = await supabase.from('system_settings').update({
-        ticker_text: document.getElementById('setTicker').value,
-        notice_title: document.getElementById('setNoticeTitle').value,
-        notice_body: document.getElementById('setNoticeBody').value
-      }).eq('id', 1);
-      if (!error) alert('Settings updated');
-    }
-
-    function openBlogEditor() { document.getElementById('blogDrawer').style.display = 'block'; }
-    function closeBlogEditor() { document.getElementById('blogDrawer').style.display = 'none'; }
-
-    async function savePost() {
-      const post = {
-        title: document.getElementById('editTitle').value,
-        cover_image_url: document.getElementById('editImg').value,
-        content: quill.root.innerHTML,
-        excerpt: quill.getText().substring(0, 150) + '...'
       };
-      const { error } = await supabase.from('blog_posts').insert([post]);
-      if (!error) { closeBlogEditor(); loadDashboardData(); }
-    }
 
-    async function handleLogout() {
-      await supabase.auth.signOut();
-      location.reload();
-    }
+      window.checkAuth = async function () {
+        if (!hasSupabase) return signInFallback();
+        const { data: { user } } = await window.supabase.auth.getUser();
+        if (user) {
+          document.getElementById('authScreen').style.display = 'none';
+          document.getElementById('adminDash').style.display = 'grid';
+          loadDashboardData();
+        }
+      };
 
-    checkAuth();
+      checkAuth();
+    });
   </script>
+  <script src="public/assets/js/admin.js"></script>
 </body>
 </html>

@@ -20,7 +20,7 @@ function renderResources(items) {
   const g = document.getElementById('resourcesGrid');
   if (!items.length) { g.innerHTML = '<p style="padding:var(--s7);color:var(--text-m);">No resources found for this level.</p>'; return; }
   g.innerHTML = items.map(r => `
-    <div class="resource-card" onclick="viewResource('${r.drive_link}')">
+    <div class="resource-card" data-level="${r.academic_level}" data-type="${r.resource_type || ''}" onclick="viewResource('${r.drive_link}')">
       <div class="resource-badge">${r.academic_level}L</div>
       <div class="resource-card__title display">${r.title}</div>
       <div class="resource-card__type">${r.resource_type || ''}</div>

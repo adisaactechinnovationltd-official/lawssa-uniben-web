@@ -57,7 +57,16 @@ function viewResource(link) {
         alert('This resource link is a placeholder. Please contact the admin.');
         return;
     }
-    const preview = link.replace('/view', '/preview').replace('?usp=sharing', '');
+
+    let preview = link.trim();
+    if (/drive\.google\.com\/file\/d\//.test(preview)) {
+        preview = preview.replace(/\/view.*$/, '/preview');
+    } else if (/docs\.google\.com\/document\/d\//.test(preview)) {
+        preview = preview.replace(/\/edit.*$/, '/preview');
+    } else if (/drive\.google\.com\/open\?id=/.test(preview)) {
+        preview = preview.replace(/.*id=([^&]+).*/, 'https://drive.google.com/file/d/$1/preview');
+    }
+
     document.getElementById('resourceFrame').src = preview;
     openModal('resourceModal');
 }
@@ -83,6 +92,15 @@ window.viewResource = viewResource;
 window.handleContact = handleContact;
 window.state = state;
 window.supabase = supabase;
+
+// Inject unified footer from template
+document.addEventListener('DOMContentLoaded', () => {
+  const tpl = document.getElementById('siteFooterTemplate');
+  const container = document.getElementById('siteFooterContainer');
+  if (tpl && container) container.appendChild(tpl.content.cloneNode(true));
+  // wire footer nav links
+  document.querySelectorAll('.footer-nav a[data-nav]').forEach(a => a.addEventListener('click', e => { const nav = e.target.getAttribute('data-nav'); if (nav) Router.navigate(nav); }));
+});
 
 // --- GSAP ANIMATIONS ---
 if (window.gsap && window.ScrollTrigger) {
@@ -228,14 +246,23 @@ if (window.gsap && window.ScrollTrigger) {
         });
         const presText = document.querySelector('.pres-message-text');
         if (presText) {
-            const words = presText.textContent.split(' ');
-            presText.innerHTML = words.map(w => `<span class='pres-word'>${w}</span>`).join(' ');
+            const originalHtml = presText.innerHTML;
+            const fragments = originalHtml.split(/(<br\s*\/?>)/gi);
+            presText.innerHTML = fragments.map(fragment => {
+                if (/^<br/i.test(fragment)) return fragment;
+                return fragment
+                    .trim()
+                    .split(/\s+/)
+                    .filter(Boolean)
+                    .map(word => `<span class='pres-word'>${word}</span>`)
+                    .join(' ');
+            }).join(' ');
             gsap.set('.pres-word', { opacity: 0, y: 24 });
             gsap.to('.pres-word', {
                 opacity: 1,
                 y: 0,
-                stagger: 0.02,
-                duration: 0.6,
+                stagger: 0.008,
+                duration: 0.3,
                 ease: 'power4.out',
                 scrollTrigger: { trigger: presText, start: 'top 85%', toggleActions: 'play none none none' }
             });
@@ -261,22 +288,102 @@ if (window.gsap && window.ScrollTrigger) {
 
 document.addEventListener('DOMContentLoaded', function () {
     const marquee = document.getElementById('heroMarquee');
-    if (!marquee || !window.gsap) return;
+    if (marquee && window.gsap) {
+        const marqueeContent = marquee.innerHTML;
+        marquee.innerHTML += marqueeContent;
+        const marqueeWidth = marquee.scrollWidth / 2;
+        gsap.to(marquee, {
+            x: -marqueeWidth,
+            duration: 18,
+            ease: "none",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % marqueeWidth)
+            }
+        });
+    }
 
-    // Duplicate content for seamless scroll
-    const marqueeContent = marquee.innerHTML;
-    marquee.innerHTML += marqueeContent;
+    // Ensure store preview and resources filters are wired
+    if (window.renderStoreGrid) renderStoreGrid('storePreviewGrid');
+    if (window.renderStoreGrid) renderStoreGrid('storeGrid');
 
-    // Get width of the content
-    const marqueeWidth = marquee.scrollWidth / 2;
+    const defaultResources = [
+        { title: 'Law of Contract — Past Questions 2022', academic_level: 100, resource_type: 'Past Question', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Constitutional Law — Lecture Notes', academic_level: 100, resource_type: 'Lecture Note', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'General Study Guide — Legal Writing', academic_level: 0, resource_type: 'Reference', resource_category: 'general', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Law of Torts — Past Questions 2023', academic_level: 200, resource_type: 'Past Question', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Criminal Law Textbook — Smith & Hogan', academic_level: 200, resource_type: 'Textbook', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Student Life Handbook — Campus Success', academic_level: 0, resource_type: 'Guide', resource_category: 'general', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Company Law — Past Questions 2022–2024', academic_level: 300, resource_type: 'Past Question', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Jurisprudence — Complete Study Guide', academic_level: 300, resource_type: 'Reference', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Professional Ethics — Bar Prep Notes', academic_level: 500, resource_type: 'Lecture Note', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' },
+        { title: 'Taxation Law — Past Questions 2022–2024', academic_level: 500, resource_type: 'Past Question', resource_category: 'faculty', drive_link: 'https://drive.google.com/file/d/example/view' }
+    ];
 
-    gsap.to(marquee, {
-        x: -marqueeWidth,
-        duration: 18,
-        ease: "none",
-        repeat: -1,
-        modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % marqueeWidth)
+    if (window.state.resources.length === 0) {
+        window.state.resources = defaultResources;
+    }
+    if (window.renderResources) renderResources(window.state.resources);
+
+    const levelTabs = document.querySelectorAll('[data-level]');
+    const categoryBtns = document.querySelectorAll('[data-category]');
+    const levelTabWrapper = document.querySelector('.resources-level-tabs');
+
+    function updateLevelTabVisibility(category) {
+        if (!levelTabWrapper) return;
+        if (category === 'faculty') {
+            levelTabWrapper.classList.add('visible');
+        } else {
+            levelTabWrapper.classList.remove('visible');
+            document.querySelectorAll('[data-level]').forEach(t => t.classList.remove('active'));
+            document.querySelector('[data-level="all"]')?.classList.add('active');
         }
-    });
+    }
+
+    function applyResourceFilters() {
+        const category = document.querySelector('[data-category].active')?.getAttribute('data-category') || 'all';
+        const level = document.querySelector('[data-level].active')?.getAttribute('data-level') || 'all';
+        let filtered = window.state.resources;
+        if (category !== 'all') filtered = filtered.filter(r => r.resource_category === category);
+        if (category === 'faculty' && level !== 'all') filtered = filtered.filter(r => r.academic_level === parseInt(level, 10));
+        if (window.renderResources) renderResources(filtered);
+    }
+
+    if (categoryBtns) {
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                updateLevelTabVisibility(this.getAttribute('data-category'));
+                applyResourceFilters();
+            });
+        });
+    }
+
+    if (levelTabs) {
+        levelTabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                levelTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                applyResourceFilters();
+            });
+        });
+    }
+
+    updateLevelTabVisibility('all');
+
+    const newsFilterBtns = document.querySelectorAll('#newsFilterBar [data-filter]');
+    if (newsFilterBtns) {
+        newsFilterBtns.forEach(btn => {
+            btn.addEventListener('click', function () {
+                newsFilterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.getAttribute('data-filter');
+                document.querySelectorAll('.news-full-grid .news-card').forEach(card => {
+                    const category = card.querySelector('.news-card__cat')?.textContent?.trim();
+                    card.style.display = filter === 'all' || category === filter ? '' : 'none';
+                });
+            });
+        });
+    }
 });

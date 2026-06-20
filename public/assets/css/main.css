@@ -2,24 +2,26 @@
    DESIGN TOKENS — LIGHT EDITORIAL THEME
    ============================================================ */
 :root {
-    --bg: #F0EDE6;
-    /* warm off-white / parchment */
-    --bg-2: #E8E4DB;
-    /* slightly darker cream */
-    --bg-inv: #111010;
-    /* inverted black sections */
+    --bg: #F7FBFF;
+    /* soft white base for clean content sections */
+    --bg-2: #E8F1FC;
+    /* pale navy surface accent */
+    --bg-inv: #132B4A;
+    /* core organization brand navy */
     --surface: #FFFFFF;
-    --border: #D6D1C8;
-    --border-dark: #333333;
-    --text-h: #0D0D0D;
-    --text-b: #2A2A2A;
-    --text-m: #555555;
-    --text-l: #888888;
-    --gold: #B8922A;
-    --gold-lt: #D4AA50;
-    --gold-bg: #F5EED8;
+    --surface-alt: #132B4A;
+    --border: rgba(19, 43, 74, 0.12);
+    --border-dark: #0B1A2F;
+    --text-h: #102D52;
+    --text-b: #111820;
+    --text-m: #4F6B8B;
+    --text-l: #7B94B0;
+    --gold: #C39F33;
+    --gold-lt: #E7D4A0;
+    --gold-bg: rgba(195, 159, 51, 0.12);
     --white: #FFFFFF;
-    --danger: #C0392B;
+    --black: #000000;
+    --danger: #D73E1F;
     --success: #1A7A4A;
 
     --font-d: 'Big Shoulders Display', sans-serif;
@@ -157,8 +159,25 @@ section {
 
 section.section--active {
     display: block;
-    animation: sectionIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: sectionIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* Store styles */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: var(--s5);
+}
+
+.store-card .news-card__img img {
+    height: 160px;
+    object-fit: cover;
+}
+
+.product-modal__img img { width: 240px; height:240px; object-fit:cover }
+.product-modal__body { padding: var(--s4) }
+.bank-details { background: var(--gold-bg); padding: var(--s3); border-radius:4px }
+
 
 @keyframes sectionIn {
     from {
@@ -288,28 +307,82 @@ section.section--active {
     padding: var(--s7);
 }
 
+.modal--product {
+    max-width: 500px;
+}
+
+#productModalContent {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s5);
+}
+
+.product-modal__img {
+    width: 100%;
+}
+
+.product-modal__img img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.product-modal__body {
+    padding: var(--s4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s3);
+}
+
+.product-modal__body h2 {
+    font-family: var(--font-d);
+    font-size: var(--t-xl);
+    color: var(--text-h);
+}
+
+.product-modal__body p {
+    font-size: var(--t-sm);
+    color: var(--text-m);
+}
+
+.bank-details {
+    background: var(--gold-bg);
+    padding: var(--s3);
+    border-radius: 4px;
+    font-size: var(--t-sm);
+}
+
+.bank-details > div {
+    margin-bottom: var(--s2);
+}
+
+.bank-details > div:last-child {
+    margin-bottom: 0;
+}
+
 /* ============================================================
    TICKER
    ============================================================ */
 .ticker {
     height: 38px;
-    background: var(--text-h);
+    background: var(--bg-inv);
     overflow: hidden;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .ticker__track {
     display: flex;
+    gap: 40px;
     white-space: nowrap;
     animation: tickerRun 35s linear infinite;
 }
 
 .ticker__item {
-    font-family: var(--font-d);
+    font-family: Arial, Helvetica, sans-serif;
     font-size: var(--t-sm);
-    color: var(--gold);
+    color: white;
     padding: 0 var(--s8);
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -566,7 +639,7 @@ section.section--active {
 }
 
 .hero__stat {
-    border-top: 1px solid #333;
+    border-top: 1px solid var(--border);
     padding-top: var(--s4);
 }
 
@@ -580,7 +653,7 @@ section.section--active {
 
 .hero__stat-label {
     font-size: var(--t-xs);
-    color: #777;
+    color: var(--text-m);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-top: 4px;
@@ -730,15 +803,15 @@ section.section--active {
    STATS BAND — [LAWSSA — 02]
    ============================================================ */
 .stats-band {
-    background: var(--text-h);
+    background: var(--bg-inv);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .stat-cell {
     padding: var(--s7) var(--s6);
-    border-right: 1px solid #222;
+    border-right: 1px solid var(--border);
     text-align: center;
 }
 
@@ -757,7 +830,7 @@ section.section--active {
 
 .stat-cell__label {
     font-size: var(--t-xs);
-    color: #777;
+    color: var(--text-l);
     text-transform: uppercase;
     letter-spacing: 0.1em;
 }
@@ -784,6 +857,8 @@ section.section--active {
     height: 100%;
     object-fit: cover;
     filter: grayscale(0.3) contrast(1.05);
+    -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .pres-img-overlay {
@@ -822,12 +897,31 @@ section.section--active {
     opacity: 0.3;
 }
 
+.pres-quote-mark span {
+    font-size: 1.5rem;
+    color: var(--text-h);
+    display: block;
+    margin-top: var(--s2);
+}
+
 .pres-message-text {
     font-size: var(--t-lg);
     color: var(--text-m);
     line-height: 1.8;
     font-style: italic;
     margin-bottom: var(--s6);
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.pres-message-text br {
+    display: block;
+    margin: calc(var(--s3) / 2) 0;
+}
+
+.pres-word {
+    display: inline-block;
+    margin-right: 0.18rem;
 }
 
 .pres-sig {
@@ -1022,6 +1116,26 @@ section.section--active {
 .news-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: var(--s5);
+}
+
+.section-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--s5);
+    align-items: flex-end;
+    padding: var(--s7) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.section-copy {
+    color: var(--text-m);
+    font-size: var(--t-base);
+    max-width: 560px;
+}
+
+.store-page {
+    padding: var(--s7) 0 var(--s10);
 }
 
 .news-card {
@@ -1104,8 +1218,8 @@ section.section--active {
    CALENDAR STRIP — [LAWSSA — 06]
    ============================================================ */
 .calendar-section {
-    background: var(--text-h);
-    border-bottom: 1px solid #222;
+    background: var(--bg-inv);
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .cal-header {
@@ -1113,14 +1227,14 @@ section.section--active {
     justify-content: space-between;
     align-items: center;
     padding: var(--s5) var(--s7);
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border-dark);
 }
 
 .cal-header-title {
     font-family: var(--font-d);
     font-size: var(--t-2xl);
     font-weight: 900;
-    color: var(--white);
+    color: var(--text-h);
     text-transform: uppercase;
 }
 
@@ -1131,13 +1245,13 @@ section.section--active {
 
 .cal-item {
     padding: var(--s5) var(--s5);
-    border-right: 1px solid #222;
+    border-right: 1px solid var(--border);
     cursor: default;
     transition: background 0.2s;
 }
 
 .cal-item:hover {
-    background: #1a1a1a;
+    background: rgba(19, 43, 74, 0.12);
 }
 
 .cal-item:last-child {
@@ -1155,7 +1269,7 @@ section.section--active {
 
 .cal-item__month {
     font-size: var(--t-xs);
-    color: #666;
+    color: var(--text-m);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: var(--s3);
@@ -1400,7 +1514,7 @@ section.section--active {
 .contact-detail__icon {
     width: 36px;
     height: 36px;
-    border: 1px solid #333;
+    border: 1px solid var(--border-dark);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1487,8 +1601,8 @@ section.section--active {
    FOOTER
    ============================================================ */
 .footer {
-    background: var(--text-h);
-    border-top: 1px solid #222;
+    background: var(--bg-inv);
+    border-top: 1px solid var(--border-dark);
 }
 
 .footer-top {
@@ -1496,7 +1610,7 @@ section.section--active {
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: var(--s8);
     padding: var(--s9) var(--s7) var(--s8);
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid var(--border);
 }
 
 .footer-logo {
@@ -1514,7 +1628,7 @@ section.section--active {
 
 .footer-tagline {
     font-size: var(--t-sm);
-    color: #666;
+    color: var(--text-m);
     line-height: 1.6;
     max-width: 280px;
 }
@@ -1536,7 +1650,7 @@ section.section--active {
 
 .footer-nav a {
     font-size: var(--t-sm);
-    color: #777;
+    color: var(--text-m);
     transition: color 0.2s;
     cursor: pointer;
 }
@@ -1554,12 +1668,12 @@ section.section--active {
 
 .footer-copy {
     font-size: var(--t-xs);
-    color: #555;
+    color: var(--text-m);
 }
 
 .footer-credit {
     font-size: var(--t-xs);
-    color: #555;
+    color: var(--text-m);
 }
 
 .footer-credit a {
@@ -1568,6 +1682,72 @@ section.section--active {
 
 .footer-credit a:hover {
     color: var(--white);
+}
+
+.home-extra {
+    padding: var(--s8) 0;
+    background: rgba(19, 43, 74, 0.04);
+}
+
+.home-extra__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s6);
+    padding: 0 var(--s7);
+}
+
+.merch-card,
+.rules-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: var(--s7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+}
+
+.merch-card__title,
+.rules-card__title {
+    margin-bottom: var(--s3);
+}
+
+.merch-card__text,
+.rules-note {
+    color: var(--text-m);
+    line-height: 1.75;
+}
+
+.merch-items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s2);
+    color: var(--text-h);
+    font-weight: 600;
+}
+
+.rules-list {
+    display: grid;
+    gap: var(--s2);
+    color: var(--text-m);
+    line-height: 1.8;
+    list-style: disc inside;
+}
+
+.rules-list li {
+    margin-left: var(--s2);
+}
+
+.resource-modal__header {
+    padding: var(--s4) var(--s7);
+    color: var(--white);
+    background: var(--bg-inv);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+#resourceFrame {
+    width: 100%;
+    min-height: 70vh;
+    border: none;
 }
 
 /* ============================================================
@@ -1836,7 +2016,7 @@ section.section--active {
 }
 
 .pay-card-type {
-    border: 1px solid #2a2a2a;
+    border: 1px solid var(--border-dark);
     padding: var(--s5);
     transition: border-color 0.2s;
 }
@@ -1847,7 +2027,7 @@ section.section--active {
 
 .pay-card-type__label {
     font-size: var(--t-xs);
-    color: #666;
+    color: var(--text-m);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: var(--s2);
@@ -1862,14 +2042,14 @@ section.section--active {
 
 .pay-card-type__desc {
     font-size: var(--t-xs);
-    color: #777;
+    color: var(--text-m);
     margin-top: var(--s2);
 }
 
 .pay-note {
     margin-top: var(--s7);
     font-size: var(--t-xs);
-    color: #555;
+    color: var(--text-m);
     line-height: 1.7;
 }
 
@@ -2101,7 +2281,7 @@ section.section--active {
     }
 
     .stat-cell:nth-child(3) {
-        border-top: 1px solid #222;
+border-top: 1px solid var(--border-dark);
     }
 
     .pres-section {
@@ -2292,6 +2472,25 @@ section.section--active {
 
     .hero__actions {
         flex-direction: column;
+    }
+
+    .pres-content-col {
+        padding: var(--s6) var(--s5);
+    }
+
+    .pres-message-text {
+        font-size: var(--t-base);
+        line-height: 1.75;
+        letter-spacing: 0.01em;
+    }
+
+    .pres-quote-mark {
+        font-size: 4rem;
+        margin-bottom: var(--s4);
+    }
+
+    .pres-message-text br {
+        margin: var(--s3) 0;
     }
 }
 
