@@ -27,14 +27,6 @@ const Router = (() => {
         if (mobileNav && mobileNav.classList.contains('open')) {
           mobileNav.classList.remove('open');
           globalThis.mobileOpen = false;
-
-          function toggleMobile() {
-            globalThis.mobileOpen = !globalThis.mobileOpen;
-
-            document
-              .getElementById('mobileNav')
-              .classList.toggle('open', globalThis.mobileOpen);
-          }
         }
       });
     });

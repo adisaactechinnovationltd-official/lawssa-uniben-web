@@ -260,23 +260,23 @@ if (window.gsap && window.ScrollTrigger) {
 // <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
 
 document.addEventListener('DOMContentLoaded', function () {
-  const marquee = document.getElementById('heroMarquee');
-  if (!marquee) return;
+    const marquee = document.getElementById('heroMarquee');
+    if (!marquee || !window.gsap) return;
 
-  // Duplicate content for seamless scroll
-  const marqueeContent = marquee.innerHTML;
-  marquee.innerHTML += marqueeContent;
+    // Duplicate content for seamless scroll
+    const marqueeContent = marquee.innerHTML;
+    marquee.innerHTML += marqueeContent;
 
-  // Get width of the content
-  const marqueeWidth = marquee.scrollWidth / 2;
+    // Get width of the content
+    const marqueeWidth = marquee.scrollWidth / 2;
 
-  gsap.to(marquee, {
-    x: -marqueeWidth,
-    duration: 18,
-    ease: "none",
-    repeat: -1,
-    modifiers: {
-      x: gsap.utils.unitize(x => parseFloat(x) % marqueeWidth)
-    }
-  });
+    gsap.to(marquee, {
+        x: -marqueeWidth,
+        duration: 18,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % marqueeWidth)
+        }
+    });
 });
