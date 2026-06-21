@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // --- GSAP ANIMATIONS ---
+// --- GSAP ANIMATIONS ---
 if (window.gsap && window.ScrollTrigger) {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -148,15 +149,19 @@ if (window.gsap && window.ScrollTrigger) {
 
     // TICKERS: Infinite Loop
     function animateTickers() {
+        const isMobile = window.innerWidth < 768;
+        
         const ticker = document.querySelector('.ticker__track');
         if (ticker) {
             const width = ticker.scrollWidth / 2;
-            gsap.to(ticker, { x: -width, duration: 35, ease: 'none', repeat: -1, paused: false, overwrite: true });
+            const duration = (width / 1200) * 35;
+            gsap.to(ticker, { x: -width, duration: duration, ease: 'none', repeat: -1, paused: false, overwrite: true });
         }
         const heroTicker = document.querySelector('.hero__bottom-track');
         if (heroTicker) {
             const width = heroTicker.scrollWidth / 2;
-            gsap.to(heroTicker, { x: -width, duration: 40, ease: 'none', repeat: -1, paused: false, overwrite: true });
+            const duration = (width / 1200) * 40;
+            gsap.to(heroTicker, { x: -width, duration: duration, ease: 'none', repeat: -1, paused: false, overwrite: true });
         }
     }
 
@@ -172,6 +177,7 @@ if (window.gsap && window.ScrollTrigger) {
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 85%',
+                    once: true
                 },
             });
         });
@@ -186,6 +192,7 @@ if (window.gsap && window.ScrollTrigger) {
                     trigger: el,
                     start: 'top 85%',
                     toggleActions: 'play none none none',
+                    once: true
                 },
             });
         });
@@ -199,6 +206,7 @@ if (window.gsap && window.ScrollTrigger) {
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 85%',
+                    once: true
                 },
             });
         });
@@ -212,6 +220,7 @@ if (window.gsap && window.ScrollTrigger) {
                 scrollTrigger: {
                     trigger: el,
                     start: 'top 85%',
+                    once: true
                 },
             });
         });
@@ -223,12 +232,16 @@ if (window.gsap && window.ScrollTrigger) {
             const end = parseInt(cell.textContent.replace(/\D/g, '')) || 0;
             if (!end) return;
             ScrollTrigger.create({
-                trigger: cell, start: 'top 85%', once: true,
+                trigger: cell, 
+                start: 'top 85%', 
+                once: true,
                 onEnter: () => {
                     gsap.fromTo(
                         { val: 0 },
                         {
-                            val: end, duration: 1.2, ease: 'power4.out',
+                            val: end, 
+                            duration: 1.2, 
+                            ease: 'power4.out',
                             onUpdate: function () {
                                 cell.textContent = end > 99 ? Math.floor(this.targets()[0].val) + '+' : Math.floor(this.targets()[0].val);
                             }
@@ -243,7 +256,7 @@ if (window.gsap && window.ScrollTrigger) {
     function animatePresident() {
         gsap.from('.pres-image-col img', {
             scale: 1.12, clipPath: 'inset(30% 0 30% 0)', opacity: 0, duration: 0.8, ease: 'power4.out',
-            scrollTrigger: { trigger: '.pres-image-col', start: 'top 85%', toggleActions: 'play none none none' }
+            scrollTrigger: { trigger: '.pres-image-col', start: 'top 85%', toggleActions: 'play none none none', once: true }
         });
         const presText = document.querySelector('.pres-message-text');
         if (presText) {
@@ -265,9 +278,24 @@ if (window.gsap && window.ScrollTrigger) {
                 stagger: 0.008,
                 duration: 0.3,
                 ease: 'power4.out',
-                scrollTrigger: { trigger: presText, start: 'top 85%', toggleActions: 'play none none none' }
+                scrollTrigger: { trigger: presText, start: 'top 85%', toggleActions: 'play none none none', once: true }
             });
         }
+    }
+
+    // FORCE ANIMATIONS TO TRIGGER ON LOAD
+    function triggerVisibleAnimations() {
+        // Get all elements that should animate
+        const revealElements = document.querySelectorAll('.wwd-item, .news-card, .leader-card, .stat-cell');
+        
+        revealElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            // If element is in viewport, manually trigger animation
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                el.style.opacity = '1';
+                el.style.transform = 'none';
+            }
+        });
     }
 
     // INIT ALL
@@ -277,11 +305,22 @@ if (window.gsap && window.ScrollTrigger) {
         animateReveals();
         animateStats();
         animatePresident();
+        
+        // Wait a bit then refresh scroll triggers
+        setTimeout(() => {
+            if (window.ScrollTrigger) {
+                ScrollTrigger.refresh();
+            }
+            triggerVisibleAnimations();
+        }, 100);
     });
 
     window.addEventListener('pageshow', () => {
         if (window.ScrollTrigger) {
-            requestAnimationFrame(() => ScrollTrigger.refresh());
+            requestAnimationFrame(() => {
+                ScrollTrigger.refresh();
+                triggerVisibleAnimations();
+            });
         }
     });
 }

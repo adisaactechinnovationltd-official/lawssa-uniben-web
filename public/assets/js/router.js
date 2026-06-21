@@ -4,13 +4,24 @@ const Router = (() => {
   const allNavLinks = () => document.querySelectorAll('[data-nav]');
 
   function navigate(target, replaceState = false) {
-    allSections().forEach(s => s.classList.remove('section--active'));
+    // Hide all sections
+    allSections().forEach(s => {
+      s.classList.remove('section--active');
+      s.style.display = 'none';
+    });
+    
+    // Remove active from nav links
     allNavLinks().forEach(l => l.classList.remove('nav-link--active'));
 
+    // Show target section
     const sec = document.querySelector(`[data-section="${target}"]`);
     const link = document.querySelector(`.nav-link[data-nav="${target}"]`);
 
-    if (sec) sec.classList.add('section--active');
+    if (sec) {
+      sec.classList.add('section--active');
+      sec.style.display = 'block';
+    }
+    
     if (link) link.classList.add('nav-link--active');
 
     if (replaceState) {
@@ -19,9 +30,22 @@ const Router = (() => {
       window.history.pushState({ page: target }, '', `#${target}`);
     }
 
-    if (window.ScrollTrigger) {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    }
+    // Scroll to top
+    window.scrollTo(0, 0);
+
+    // Refresh animations after navigation
+    setTimeout(() => {
+      if (window.ScrollTrigger) {
+        window.ScrollTrigger.refresh();
+      }
+      if (window.gsap && window.gsap.delayedCall) {
+        window.gsap.delayedCall(0.1, () => {
+          if (window.ScrollTrigger) {
+            window.ScrollTrigger.refresh();
+          }
+        });
+      }
+    }, 50);
   }
 
   function init() {

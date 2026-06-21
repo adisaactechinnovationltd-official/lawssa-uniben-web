@@ -32,13 +32,16 @@ function renderStoreGrid(containerId) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = STORE_ITEMS.map(it => `
-    <article class="news-card store-card" onclick="openProduct('${it.id}')">
-      <div class="news-card__img"><img src="${it.image}" alt="${it.title}" loading="lazy"></div>
-      <div class="news-card__body">
-        <div class="news-card__cat">Store</div>
-        <h3 class="news-card__title display">${it.title}</h3>
-        <p class="news-card__excerpt">Price: ₦${it.price.toLocaleString()}</p>
-        <div class="news-card__meta"><span>SKU: ${it.sku}</span><span class="news-card__arrow">→</span></div>
+    <article class="store-card" onclick="openProduct('${it.id}')">
+      <div class="store-card__img-wrapper">
+        <img src="${it.image}" alt="${it.title}" loading="lazy" class="store-card__img">
+        <div class="store-card__overlay"></div>
+      </div>
+      <div class="store-card__body">
+        <h3 class="store-card__title">${it.title}</h3>
+        <p class="store-card__price">₦${it.price.toLocaleString()}</p>
+        <div class="store-card__sku">SKU: ${it.sku}</div>
+        <div class="store-card__action">View Details →</div>
       </div>
     </article>
   `).join('');
@@ -51,16 +54,16 @@ function openProduct(id) {
   el.innerHTML = `
     <div class="product-modal__img"><img src="${p.image}" alt="${p.title}"></div>
     <div class="product-modal__body">
-      <h2>${p.title}</h2>
-      <p><strong>Price:</strong> ₦${p.price.toLocaleString()}</p>
-      <p><strong>SKU:</strong> ${p.sku}</p>
-      <p style="margin-top:var(--s4);font-size:var(--t-xs);">To purchase, make a bank transfer to the account below and send a copy of your transfer receipt via WhatsApp. Include your name, item, amount and phone number.</p>
+      <h2 class="product-modal__title">${p.title}</h2>
+      <div class="product-modal__price">₦${p.price.toLocaleString()}</div>
+      <p class="product-modal__sku"><strong>SKU:</strong> ${p.sku}</p>
+      <p class="product-modal__desc">To purchase, make a bank transfer to the account below and send a copy of your transfer receipt via WhatsApp. Include your name, item, amount and phone number.</p>
       <div class="bank-details">
         <div><strong>Bank:</strong> Fidelity Bank</div>
         <div><strong>Account Name:</strong> Law Students Association</div>
         <div><strong>Account Number:</strong> 6060197309</div>
       </div>
-      <div style="margin-top:var(--s4);display:flex;gap:var(--s2);flex-direction:column;">
+      <div class="product-modal__actions">
         <button class="btn btn--gold" onclick="openWhatsApp('${p.title}', ${p.price})" style="width:100%;">Send Receipt via WhatsApp</button>
         <button class="btn btn--outline" onclick="closeModal('productModal')" style="width:100%;">Close</button>
       </div>

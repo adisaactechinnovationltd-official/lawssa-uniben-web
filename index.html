@@ -82,7 +82,7 @@
         <div class="ticker__track" id="tickerTrack">
             <div class="ticker__item">Welcome to LAWSA UNIBEN — The Official Digital Hub of Law Students at the
                 University of Benin
-                &nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⚖&nbsp;&nbsp; 2025/2026 Academic Session &nbsp;&nbsp;●&nbsp;&nbsp; Pay Your Association Dues
                 Online &nbsp;&nbsp;●&nbsp;&nbsp; Access Academic Resources by Level &nbsp;&nbsp;●&nbsp;&nbsp;</div>
             <div class="ticker__item">Welcome to LAWSA UNIBEN — The Official Digital Hub of Law Students at the
                 University of Benin
@@ -100,7 +100,7 @@
                 style="cursor:pointer; display: flex; flex-direction: row; align-items: center;">
                 <img src="./public/assets/images/logo.png" alt="LAWSA UNIBEN Logo"
                     style="height:50px;width:auto;margin-right:var(--s2);">
-                LAWSA <span>UNIBEN</span>
+                LAWSA <span> UNIBEN</span>
             </div>
             <ul class="nav-links">
                 <li class="nav-link nav-link--active" data-nav="home">Home</li>
@@ -134,9 +134,12 @@
                 <div class="hero__main">
                     <div class="hero_left">
                         <h1 class="hero__title display">
-                            <span class="text-gold">Vanguard</span><br>of
-                            <span class="text-legal">Legal</span>
-                            <span class="text-gold">Excellence</span>
+                            <span class="text-gold">Vanguard</span>
+                            <div cl>
+                                <span>of</span>
+                                <span class="text-legal">Legal</span>
+                                <span class="text-gold">Excellence</span>
+                            </div>
                         </h1>
                         <p class="hero__subtitle">
                             Welcome to the digital home of the Law Students' Association, University of Benin. <br>
@@ -145,7 +148,7 @@
                         </p>
                         <div class="hero__actions">
                             <button class="btn btn--primary" onclick="Router.navigate('pay')">Pay Dues Now</button>
-                            <button class="btn btn--outline" onclick="Router.navigate('resources')">Browse
+                            <button class="btn btn--outline hero-btn-special" onclick="Router.navigate('resources')">Browse
                                 Resources</button>
                         </div>
                         <div class="hero__session">
@@ -214,7 +217,6 @@
             <div class="what-we-do">
                 <div class="wwd-header">
                     <div class="wwd-header-left">
-                        <div class="section-num">[LAWSA — 01]</div>
                         <div class="wwd-big display">OUR<br>RESPONSIBILITY</div>
                     </div>
                     <div class="wwd-header-right">
@@ -270,9 +272,6 @@
 
             <!-- STATS BAND — [LAWSA — 02] -->
             <div class="stats-band">
-                <div class="section-num"
-                    style="grid-column:span 4;padding:var(--s4) var(--s7);border-bottom:1px solid #222;color:#555;">
-                    [LAWSA — 02]</div>
                 <div class="stat-cell">
                     <div class="stat-cell__num">500+</div>
                     <div class="stat-cell__label">Active Members</div>
@@ -302,7 +301,6 @@
                     </div>
                 </div>
                 <div class="pres-content-col">
-                    <div class="section-num">[LAWSA — 03]</div>
                     <div class="pres-quote-mark display">"<span>Welcome Message from the President</span></div>
                     <p class="pres-message-text" id="presText">
                         It is with great pleasure and a profound sense of pride that I welcome you to the official
@@ -337,9 +335,7 @@
             <!-- LEADERSHIP PREVIEW — [LAWSA — 04] -->
             <div class="leaders-section reveal">
                 <div class="leaders-header">
-                    <div class="section-num">[LAWSA — 04]</div>
                     <div class="leaders-big display">LEADERSHIP</div>
-                    <button class="btn btn--outline" onclick="Router.navigate('leaders')">See All Executives →</button>
                 </div>
                 <div class="leader-featured">
                     <div class="leader-featured__img">
@@ -413,13 +409,6 @@
                                 src="./public/assets/images/leaders/headshots/assdirectoroffinanceamamiomoelfreda.webp"
                                 alt="Assistant Director of Finance">
                         </div>
-                        <!-- <div class="leader-card__role">Assistant Director of Finance</div>
-                        <div class="leader-card__name display">Amami Omo Elfreda</div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="./public/assets/images/leaders/headshots/directorofsportspeaceimhanlele.webp" alt="Director of Sports">
-                        </div> -->
                         <div class="leader-card__role">Director of Sports</div>
                         <div class="leader-card__name display">Peace Imhanlele</div>
                     </div>
@@ -438,7 +427,6 @@
             <div class="news-section reveal">
                 <div class="news-header">
                     <div>
-                        <div class="section-num">[LAWSA — 05]</div>
                         <div class="news-big display">OUR<br>RECENT<br>NEWS</div>
                     </div>
                     <button class="btn btn--outline" onclick="Router.navigate('news')">See All News →</button>
@@ -483,8 +471,8 @@
                             <p class="news-card__excerpt">In a landmark move toward digital transformation, LAWSA
                                 UNIBEN has officially launched its digital platform — the first of its kind among law
                                 student associations in Edo State.</p>
-                            <div class="news-card__meta"><span>Jun 22nd, 2026</span><span </div>
-                            </div>
+                            <div class="news-card__meta"><span>Jun 22nd, 2026</span><span class="news-card__arrow">→</span></div>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -493,12 +481,11 @@
             <div class="store-section reveal">
                 <div class="news-header">
                     <div>
-                        <div class="section-num">[LAWSA — STORE]</div>
                         <div class="news-big display">OUR<br>STORE</div>
                     </div>
                     <button class="btn btn--outline" onclick="Router.navigate('store')">Visit Store →</button>
                 </div>
-                <div class="news-grid" id="storePreviewGrid">
+                <div class="store-preview-grid" id="storePreviewGrid">
                     <!-- Store cards will be injected here -->
                 </div>
             </div>
@@ -513,14 +500,11 @@
                 </div>
             </div>
 
-
-
             <div class="whatsapp-group-section reveal"
                 style="margin-bottom:var(--s8);background:rgba(255,255,255,.06);padding:var(--s6);border-radius:24px;">
-                <div class="section-num" style="color:#555;">[LAWSA — GROUP]</div>
                 <div class="news-big display" style="margin-bottom:var(--s4);">Join Our Official<br><span
                         class="text-gold">WhatsApp Group</span></div>
-                <p style="color:var(--text-m);max-width:680px;line-height:1.8;">Stay connected with LAWSA UNIBEN
+                <p style="color:var(--text-m);max-width:680px;line-height:1.8;text-align: center; margin: 0 auto;">Stay connected with LAWSA UNIBEN
                     announcements, dues updates, event invitations, and member support. Send a message to our official
                     WhatsApp line to request access to the group.</p>
                 <a class="btn btn--gold" href="https://chat.whatsapp.com/JLqGiwPvnNR2DFUoJnyqOZ?mode=gi_t
@@ -529,7 +513,6 @@
             <div class="contact-section reveal">
                 <div class="contact-left">
                     <div>
-                        <div class="section-num" style="color:#555;">[LAWSA — 10]</div>
                         <div class="contact-big display">TALK<br>TO US</div>
                     </div>
                     <div class="contact-details">
@@ -599,12 +582,14 @@
                 <div class="leaders-page-title display">
                     Executive<br><span class="text-gold">Leadership</span>
                 </div>
-                <div class="leaders-branches">
-                    <div class="branch-pill active" onclick="setLeaderBranch('executives',this)">Executive</div>
-                    <div class="branch-pill" onclick="setLeaderBranch('legislative',this)">Legislative</div>
-                    <div class="branch-pill" onclick="setLeaderBranch('judiciary',this)">Judiciary</div>
-                    <div class="branch-pill" onclick="setLeaderBranch('lsba',this)">Law Students Bar Association</div>
-                    <div class="branch-pill" onclick="setLeaderBranch('previous',this)">Previous Presidents</div>
+                <div class="leaders-branches-container">
+                    <div class="leaders-branches">
+                        <div class="branch-pill active" onclick="setLeaderBranch('executives',this)">Executive</div>
+                        <div class="branch-pill" onclick="setLeaderBranch('legislative',this)">Legislative</div>
+                        <div class="branch-pill" onclick="setLeaderBranch('judiciary',this)">Judiciary</div>
+                        <div class="branch-pill" onclick="setLeaderBranch('lsba',this)">Law Students Bar Association</div>
+                        <div class="branch-pill" onclick="setLeaderBranch('previous',this)">Previous Presidents</div>
+                    </div>
                 </div>
             </div>
 
@@ -699,70 +684,6 @@
                         <div class="leader-card__role">Director of Socials</div>
                         <div class="leader-card__name display">Aigbokha Eefosa</div>
                     </div>
-                    <!-- <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="public/assets/images/leaders/headshots/vicepresidentegbadonobehimarielionel.webp alt="">
-                        </div>
-                        <div class=" leader-card__role">Vice President</div>
-                        <div class="leader-card__name display">Egbadon Obehi Marie-Lionel</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a><a href="#"
-                                class="leader-card__social">in</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1494790108755-2616b612b890?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">Secretary General</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">Financial Secretary</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">P.R.O</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">Social Director</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&q=80" alt=""></div>
-                        <div class="leader-card__role">Academic Director</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">Welfare Director</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div>
-                    <div class="leader-card">
-                        <div class="leader-card__portrait"><img
-                                src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&q=80" alt="">
-                        </div>
-                        <div class="leader-card__role">Sports Director</div>
-                        <div class="leader-card__name display">Name Here</div>
-                        <div class="leader-card__socials"><a href="#" class="leader-card__social">ig</a></div>
-                    </div> -->
                 </div>
             </div>
 
@@ -794,7 +715,7 @@
                     <p class="section-copy">Purchase official LAWSA UNIBEN gear via bank transfer. Send your receipt
                         over WhatsApp after payment to complete your order.</p>
                 </div>
-                <div class="news-grid" id="storeGrid"></div>
+                <div class="store-full-grid" id="storeGrid"></div>
             </div>
         </section>
 
@@ -1038,7 +959,7 @@
                     <div class="pay-form-title display">Pay Your Dues</div>
                     <p class="pay-form-sub">Fill in your details below, then send your payment receipt to our WhatsApp
                         number for confirmation.</p>
-                    <p style="margin-top:var(--s3);font-size:0.95rem;color:var(--text-m);">Official WhatsApp: <a
+                    <p style="margin-top:var(--s3);font-size:0.95rem;color:var(--text-m);">Official WhatsApp: 
                             href="https://wa.me/2347057705284" target="_blank" rel="noopener">+234 705 770 5284</a></p>
                     <form id="paymentForm">
                         <div class="field">
@@ -1099,8 +1020,13 @@
         <footer class="footer">
             <div class="footer-top container">
                 <div class="footer-brand">
-                    <div class="footer-logo display">LAWSA <span>UNIBEN</span></div>
-                    <p class="footer-tagline">Digital Home of the Law Students' Association, University of Benin. Built
+                    <div class="footer-logo display">
+                        <img src="./public/assets/images/logo-white.png" alt="LAWSA UNIBEN Logo"
+                    style="height: 100px;width:auto;margin-right:var(--s2); margin: 0 auto;">
+                        LAWSA <span>UNIBEN</span>
+                        
+                    </div>
+                    <p class="footer-tagline" style="text-align: center; margin: 0 auto;">Digital Home of the Law Students' Association, University of Benin. Built
                         for clarity, connection, and excellence.</p>
                 </div>
                 <div>
@@ -1124,14 +1050,16 @@
                         <a href="#">FAQs</a>
                     </nav>
                 </div>
-                <div>
-                    <div class="footer-col-title">Contact</div>
-                    <nav class="footer-nav">
-                        <a href="mailto:lawsauniben24@gmail.com">lawsauniben24@gmail.com</a>
-                        <a href="https://wa.me/2347057705284" target="_blank" rel="noopener">+234 705 770 5284</a>
-                        <a href="#">Faculty of Law, UNIBEN</a>
-                        <a href="#">Benin City, Edo State</a>
-                    </nav>
+                <div class="footercontact">
+                    <div class="footercontactcontainer">
+                        <div class="footer-col-title">Contact</div>
+                        <nav class="footer-nav footercontactnav">
+                            <a href="mailto:lawsauniben24@gmail.com">lawsauniben24@gmail.com</a>
+                            <a href="https://wa.me/2347057705284" target="_blank" rel="noopener">+234 705 770 5284</a>
+                            <a href="#">Faculty of Law, UNIBEN</a>
+                            <a href="#">Benin City, Edo State</a>
+                        </nav>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom container">
