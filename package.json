@@ -1,7 +1,7 @@
+cat > package.json << 'EOF'
 {
-  "dependencies": {
-    "@gsap/react": "^2.1.2",
-    "gsap": "^3.15.0",
-    "motion": "^12.38.0"
-  }
+  "name": "lawssa-uniben-web",
+  "version": "1.0.0",
+  "description": "Official website for Law Students Association (LAWSA), University of Benin"
 }
+EOF
