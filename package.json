@@ -1,7 +1,5 @@
-cat > package.json << 'EOF'
 {
   "name": "lawssa-uniben-web",
   "version": "1.0.0",
   "description": "Official website for Law Students Association (LAWSA), University of Benin"
 }
-EOF
